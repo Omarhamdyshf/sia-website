@@ -12,7 +12,8 @@ const steps = [
 ];
 
 export function HowItWorksSection() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === "ar";
 
   return (
     <section id="platform" className="relative bg-[#151516] py-24 lg:py-32">
@@ -35,16 +36,16 @@ export function HowItWorksSection() {
 
         {/* Timeline */}
         <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-[39px] top-0 bottom-0 w-px bg-gradient-to-b from-gold/40 via-gold/20 to-transparent hidden md:block" />
-          {/* Mobile vertical line (centered on 56px icon = 28px) */}
-          <div className="absolute left-[27px] top-0 bottom-0 w-px bg-gradient-to-b from-gold/30 via-gold/10 to-transparent md:hidden" />
+          {/* Vertical line — uses start for RTL support */}
+          <div className="absolute start-[39px] top-0 bottom-0 w-px bg-gradient-to-b from-gold/40 via-gold/20 to-transparent hidden md:block" />
+          {/* Mobile vertical line */}
+          <div className="absolute start-[27px] top-0 bottom-0 w-px bg-gradient-to-b from-gold/30 via-gold/10 to-transparent md:hidden" />
 
           <div className="space-y-12">
             {steps.map((step, i) => (
               <motion.div
                 key={step.step}
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ delay: i * 0.2, duration: 0.6 }}
