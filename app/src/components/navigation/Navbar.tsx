@@ -53,7 +53,7 @@ export function Navbar() {
             <img
               src="/images/sia-logo.png"
               alt="SIA"
-              className="h-8 w-auto"
+              className="h-[52px] w-auto"
             />
           </a>
 
