@@ -8,46 +8,59 @@ import { ArrowRight } from "lucide-react";
 const mapPath =
   "M 30,85 L 45,78 55,80 62,72 70,70 75,65 80,68 88,62 95,65 100,60 108,58 112,62 118,58 125,60 130,55 138,52 142,56 148,50 155,48 160,52 168,55 172,50 178,48 185,52 190,48 195,52 200,55 208,52 215,58 220,62 228,60 235,65 240,62 248,68 255,65 260,70 268,72 275,68 280,75 288,72 295,78 300,75 308,80 315,78 320,82 328,85 335,82 340,88 348,85 355,90 360,88 365,92 370,95";
 
-// Saudi Arabia flag — simplified green with white sword/shahada
-function SaudiFlag({ x, y, size = 32 }: { x: number; y: number; size?: number }) {
+// Saudi Arabia flag — green field with white Arabic shahada text and sword
+function SaudiFlag({ x, y, size = 36 }: { x: number; y: number; size?: number }) {
+  const w = size;
+  const h = size * 0.667;
   return (
-    <g transform={`translate(${x - size / 2}, ${y - size / 2.5})`}>
-      <rect width={size} height={size * 0.625} rx="2" fill="#006C35" />
-      <text
-        x={size / 2}
-        y={size * 0.4}
-        textAnchor="middle"
-        fill="white"
-        fontSize={size * 0.22}
-        fontWeight="bold"
-        fontFamily="Inter, sans-serif"
-      >
-        🇸🇦
-      </text>
+    <g transform={`translate(${x - w / 2}, ${y - h - 4})`}>
+      {/* Shadow */}
+      <rect x="1" y="1" width={w} height={h} rx="2" fill="black" opacity="0.2" />
+      {/* Green field */}
+      <rect width={w} height={h} rx="2" fill="#006C35" />
+      {/* Shahada text — simplified as white horizontal line shapes */}
+      <line x1={w * 0.15} y1={h * 0.3} x2={w * 0.85} y2={h * 0.3} stroke="white" strokeWidth="1.2" strokeLinecap="round" />
+      <line x1={w * 0.2} y1={h * 0.3} x2={w * 0.2} y2={h * 0.15} stroke="white" strokeWidth="1" strokeLinecap="round" />
+      <line x1={w * 0.35} y1={h * 0.3} x2={w * 0.35} y2={h * 0.18} stroke="white" strokeWidth="1" strokeLinecap="round" />
+      <line x1={w * 0.5} y1={h * 0.3} x2={w * 0.5} y2={h * 0.15} stroke="white" strokeWidth="1" strokeLinecap="round" />
+      <line x1={w * 0.65} y1={h * 0.3} x2={w * 0.65} y2={h * 0.18} stroke="white" strokeWidth="1" strokeLinecap="round" />
+      <line x1={w * 0.8} y1={h * 0.3} x2={w * 0.8} y2={h * 0.15} stroke="white" strokeWidth="1" strokeLinecap="round" />
+      {/* Sword — horizontal line with handle */}
+      <line x1={w * 0.15} y1={h * 0.58} x2={w * 0.85} y2={h * 0.58} stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+      <line x1={w * 0.15} y1={h * 0.5} x2={w * 0.15} y2={h * 0.66} stroke="white" strokeWidth="1" strokeLinecap="round" />
+      {/* Border */}
+      <rect width={w} height={h} rx="2" fill="none" stroke="white" strokeWidth="0.5" opacity="0.2" />
     </g>
   );
 }
 
-// Malaysia flag — simplified stripes with crescent
-function MalaysiaFlag({ x, y, size = 32 }: { x: number; y: number; size?: number }) {
+// Malaysia flag — 14 red/white stripes, blue canton with crescent and star
+function MalaysiaFlag({ x, y, size = 36 }: { x: number; y: number; size?: number }) {
+  const w = size;
+  const h = size * 0.667;
+  const stripeH = h / 14;
   return (
-    <g transform={`translate(${x - size / 2}, ${y - size / 2.5})`}>
-      <rect width={size} height={size * 0.625} rx="2" fill="#010066" />
-      <rect y={size * 0.08} width={size} height={size * 0.07} fill="#CC0001" />
-      <rect y={size * 0.22} width={size} height={size * 0.07} fill="white" />
-      <rect y={size * 0.36} width={size} height={size * 0.07} fill="#CC0001" />
-      <rect y={size * 0.5} width={size} height={size * 0.07} fill="white" />
-      <text
-        x={size / 2}
-        y={size * 0.4}
-        textAnchor="middle"
-        fill="white"
-        fontSize={size * 0.22}
-        fontWeight="bold"
-        fontFamily="Inter, sans-serif"
-      >
-        🇲🇾
-      </text>
+    <g transform={`translate(${x - w / 2}, ${y - h - 4})`}>
+      {/* Shadow */}
+      <rect x="1" y="1" width={w} height={h} rx="2" fill="black" opacity="0.2" />
+      {/* White base */}
+      <rect width={w} height={h} rx="2" fill="white" />
+      {/* 7 red stripes */}
+      {Array.from({ length: 7 }).map((_, i) => (
+        <rect key={i} y={i * stripeH * 2} width={w} height={stripeH} fill="#CC0001" rx={i === 0 ? 2 : 0} />
+      ))}
+      {/* Blue canton */}
+      <rect width={w * 0.45} height={h * 0.57} fill="#010066" rx="2" />
+      {/* Crescent */}
+      <circle cx={w * 0.18} cy={h * 0.28} r={h * 0.17} fill="#FFCC00" />
+      <circle cx={w * 0.21} cy={h * 0.26} r={h * 0.13} fill="#010066" />
+      {/* Star — simplified as small yellow shape */}
+      <polygon
+        points={`${w * 0.3},${h * 0.18} ${w * 0.32},${h * 0.25} ${w * 0.38},${h * 0.25} ${w * 0.33},${h * 0.3} ${w * 0.35},${h * 0.37} ${w * 0.3},${h * 0.33} ${w * 0.25},${h * 0.37} ${w * 0.27},${h * 0.3} ${w * 0.22},${h * 0.25} ${w * 0.28},${h * 0.25}`}
+        fill="#FFCC00"
+      />
+      {/* Border */}
+      <rect width={w} height={h} rx="2" fill="none" stroke="white" strokeWidth="0.5" opacity="0.2" />
     </g>
   );
 }
