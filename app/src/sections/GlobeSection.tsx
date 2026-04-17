@@ -37,13 +37,13 @@ export function GlobeSection() {
             {isInView ? (
               <Suspense
                 fallback={
-                  <div className="w-[400px] h-[400px] rounded-full bg-white/[0.02] animate-pulse" />
+                  <div className="w-full max-w-[400px] mx-auto aspect-square rounded-full bg-white/[0.02] animate-pulse" />
                 }
               >
-                <Globe size={400} />
+                <Globe />
               </Suspense>
             ) : (
-              <div className="w-[400px] h-[400px]" />
+              <div className="w-full max-w-[400px] mx-auto aspect-square" />
             )}
           </motion.div>
 

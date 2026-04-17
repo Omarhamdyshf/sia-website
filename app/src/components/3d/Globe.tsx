@@ -1,26 +1,44 @@
 // Inspired by 21st.dev: dillionverma/globe (Magic UI)
-// Lightweight auto-rotating globe using cobe
-import { useEffect, useRef } from "react";
+// Lightweight auto-rotating globe using cobe — responsive sizing
+import { useEffect, useRef, useState } from "react";
 import createGlobe from "cobe";
 
 interface GlobeProps {
   className?: string;
-  size?: number;
 }
 
-export function Globe({ className = "", size = 400 }: GlobeProps) {
+export function Globe({ className = "" }: GlobeProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [canvasSize, setCanvasSize] = useState(0);
 
+  // Measure container to get responsive size
   useEffect(() => {
-    if (!canvasRef.current) return;
+    const container = containerRef.current;
+    if (!container) return;
+
+    const measure = () => {
+      const w = container.clientWidth;
+      setCanvasSize(Math.min(w, 400));
+    };
+    measure();
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
+
+  // Create globe once we have a size
+  useEffect(() => {
+    if (!canvasRef.current || canvasSize === 0) return;
 
     let phi = 0.4;
     let frameId: number;
 
     const globe = createGlobe(canvasRef.current, {
       devicePixelRatio: 1,
-      width: size * 2,
-      height: size * 2,
+      width: canvasSize * 2,
+      height: canvasSize * 2,
       phi: 0.4,
       theta: 0.25,
       dark: 1,
@@ -49,19 +67,21 @@ export function Globe({ className = "", size = 400 }: GlobeProps) {
       cancelAnimationFrame(frameId);
       globe.destroy();
     };
-  }, [size]);
+  }, [canvasSize]);
 
   return (
-    <div className={`relative ${className}`}>
-      <canvas
-        ref={canvasRef}
-        style={{
-          width: size,
-          height: size,
-          maxWidth: "100%",
-          aspectRatio: "1",
-        }}
-      />
+    <div ref={containerRef} className={`relative w-full max-w-[400px] mx-auto ${className}`}>
+      {canvasSize > 0 && (
+        <canvas
+          ref={canvasRef}
+          width={canvasSize * 2}
+          height={canvasSize * 2}
+          style={{
+            width: canvasSize,
+            height: canvasSize,
+          }}
+        />
+      )}
     </div>
   );
 }
