@@ -174,5 +174,42 @@
     "about": "About",
     "team": "Team",
     "contact": "Contact"
+  },
+  "investor": {
+    "portal": "Investor Portal",
+    "login": "Investor Login",
+    "loginSubtitle": "Sign in to access financial models and analytics",
+    "signInGoogle": "Sign in with Google",
+    "backToWebsite": "Back to website",
+    "accessPending": "Access pending — your request is under review",
+    "sidebar": {
+      "overview": "Overview",
+      "dashboard": "Dashboard",
+      "charts": "Charts",
+      "revenue": "Revenue",
+      "salesForecast": "Sales Forecast",
+      "revenueBreakdown": "Revenue Breakdown",
+      "cohortAnalysis": "Cohort Analysis",
+      "costs": "Costs",
+      "salaries": "Salaries & Team",
+      "opex": "Operating Expenses",
+      "capex": "Capital Expenditure",
+      "statements": "Statements",
+      "incomeStatement": "Income Statement",
+      "balanceSheet": "Balance Sheet",
+      "cashFlow": "Cash Flow Statement",
+      "analysis": "Analysis",
+      "breakeven": "Breakeven Analysis",
+      "kpiRatios": "KPI & Ratios"
+    },
+    "kpi": {
+      "revenue": "Y1 Revenue",
+      "netProfit": "Net Profit",
+      "grossMargin": "Gross Margin",
+      "roi": "ROI",
+      "breakeven": "Breakeven",
+      "mrr": "MRR"
+    },
+    "comingSoon": "Coming soon"
   }
 }
