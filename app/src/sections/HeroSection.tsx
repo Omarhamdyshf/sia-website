@@ -48,21 +48,11 @@ export function HeroSection() {
         style={{ backgroundImage: "url(/images/hero_nyc_skyline.jpg)" }}
       />
 
-      {/* Gradient Overlay — dark charcoal/gold tint (always dark regardless of theme) */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: "linear-gradient(to bottom right, rgba(10, 15, 26, 0.80), rgba(17, 24, 39, 0.70), rgba(10, 15, 26, 0.60))",
-        }}
-      />
+      {/* Gradient Overlay — dark charcoal/gold tint */}
+      <div className="absolute inset-0 bg-gradient-to-br from-charcoal/80 via-navy/70 to-charcoal/60" />
 
       {/* Subtle gold accent — gradient instead of blur for performance */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-[200px] pointer-events-none"
-        style={{
-          background: "linear-gradient(to top, rgba(200, 169, 81, 0.04), transparent)",
-        }}
-      />
+      <div className="absolute bottom-0 left-0 right-0 h-[200px] bg-gradient-to-t from-gold/[0.04] to-transparent pointer-events-none" />
 
       {/* Content */}
       <div className="relative z-10 flex-grow flex items-center">
@@ -78,7 +68,7 @@ export function HeroSection() {
               variants={itemVariants}
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/15 bg-white/5 backdrop-blur-sm mb-8"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
               <span className="text-xs font-medium text-white/70 font-sans">
                 {t("hero.badge")}
               </span>
@@ -111,11 +101,7 @@ export function HeroSection() {
             >
               <a
                 href="#contact"
-                className="group inline-flex items-center justify-center gap-2 px-8 py-4 font-semibold rounded-xl transition-all hover:shadow-lg text-sm"
-                style={{
-                  background: "var(--accent)",
-                  color: "#0a0f1a",
-                }}
+                className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-gold text-charcoal font-semibold rounded-xl hover:bg-gold-light transition-all hover:shadow-gold-glow text-sm"
               >
                 {t("hero.cta")}
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
@@ -152,12 +138,7 @@ export function HeroSection() {
       </div>
 
       {/* Bottom gradient fade into next section */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
-        style={{
-          background: "linear-gradient(to top, var(--bg), transparent)",
-        }}
-      />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-navy to-transparent pointer-events-none" />
     </section>
   );
 }
