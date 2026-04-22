@@ -246,6 +246,14 @@
   background-size: 60px 60px;
 }
 
+/* Spotlight grid for dark sections (original design) */
+.spotlight-grid {
+  background-image:
+    linear-gradient(rgba(200, 169, 81, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200, 169, 81, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
 /* ─── Gradient Text ─── */
 .text-gradient-gold {
   background: linear-gradient(135deg, #C8A951 0%, #E8D48B 50%, #A08838 100%);

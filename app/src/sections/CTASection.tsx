@@ -1,73 +1,49 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export function CTASection() {
   const { t } = useTranslation();
-  const [primaryHovered, setPrimaryHovered] = useState(false);
-
   return (
-    <section
-      id="contact"
-      aria-labelledby="cta-heading"
-      className="py-20 lg:py-24"
-      style={{ background: "var(--bg)" }}
-    >
+    <section id="contact" aria-labelledby="cta-heading" className="relative bg-[#151516] py-24 lg:py-32 overflow-hidden">
+      {/* Emissive glow orb */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full emissive-pulse pointer-events-none"
+        style={{ opacity: 0.15 }}
+      />
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="max-w-2xl mx-auto text-center px-6"
+        className="relative z-10 text-center max-w-2xl mx-auto px-6"
       >
-        <h2
-          id="cta-heading"
-          className="text-section font-serif mb-6"
-          style={{ color: "var(--text)" }}
-        >
+        <h2 id="cta-heading" className="text-section font-serif text-white mb-6">
           {t("cta.heading")}
         </h2>
-        <p
-          className="text-lg mb-10 font-sans"
-          style={{ color: "var(--text-secondary)" }}
-        >
+        <p className="text-white/50 text-lg mb-10 font-sans">
           {t("cta.subtitle")}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href="mailto:hello@sia.agency"
-            className="inline-flex items-center justify-center gap-2 px-8 py-3 font-semibold rounded-lg transition-all duration-300"
-            style={{
-              background: "var(--accent)",
-              color: "#1a1a1a",
-              ...(primaryHovered
-                ? { boxShadow: "0 0 24px var(--accent-glow)" }
-                : {}),
-            }}
-            onMouseEnter={() => setPrimaryHovered(true)}
-            onMouseLeave={() => setPrimaryHovered(false)}
+          <Link
+            to="/investor/login"
+            className="group inline-flex items-center justify-center gap-2 px-10 py-4 bg-gold text-charcoal font-semibold rounded-xl hover:bg-gold-light transition-all hover:shadow-gold-glow-lg"
           >
-            {t("cta.primary")}
+            Join the Investment Bridge
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </a>
-          <a
-            href="#insights"
-            className="inline-flex items-center justify-center gap-2 px-8 py-3 font-medium rounded-lg transition-all duration-300"
-            style={{
-              color: "var(--text-secondary)",
-              border: "1px solid var(--border)",
-            }}
+          </Link>
+          <Link
+            to="/investor/login"
+            className="inline-flex items-center justify-center gap-2 px-10 py-4 text-white/60 font-medium rounded-xl border border-white/10 hover:border-gold/30 hover:text-white transition-all"
           >
             {t("cta.secondary")}
-          </a>
+          </Link>
         </div>
 
-        <p
-          className="text-xs mt-8 font-sans"
-          style={{ color: "var(--text-tertiary)" }}
-        >
+        <p className="text-white/20 text-xs mt-8 font-sans">
           {t("cta.trust")}
         </p>
       </motion.div>
