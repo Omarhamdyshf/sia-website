@@ -123,6 +123,40 @@ This is a different story with different pricing and different scope. It will co
 
 ---
 
+## The OKR Flywheel — Go-To-Market Insight
+
+The OKR module is not just an internal tool. It is the go-to-market engine.
+
+Here is the idea: give the OKR module away for free. Every organization that signs up gets to define their objectives — what they want to achieve, what they're looking for, where they want to go. This costs them nothing. It takes five minutes. And it gives them immediate value — a structured view of their own goals.
+
+But the moment they put that information in, the platform sees the match.
+
+Their objectives align with someone else's objectives. Their "I need capital" matches someone else's "I want to deploy capital." Their "I need a distribution partner in Saudi" matches someone else's "I need a Malaysian product to distribute." Their "I want to enter the halal market" matches someone else's "I have halal infrastructure capacity."
+
+The platform shows them: *there are potential partners whose goals align with yours.*
+
+Not who — just that they exist. The match is visible, but the connection is gated.
+
+To meet that match, to see who they are, to start a relationship — that's where the platform invites them deeper. That's where the value is unlocked. That's where the paid features, the deal room, the document lifecycle, the integration journey begin.
+
+This is the flywheel:
+1. **Free OKRs attract users** — everyone wants to define their goals for free
+2. **Goals create data** — the platform learns what everyone wants
+3. **Data reveals matches** — AI finds where objectives align
+4. **Matches create desire** — "there's a partner out there for you"
+5. **Desire drives engagement** — users want to connect, to meet, to explore
+6. **Engagement drives conversion** — free users become paying users because the value is real
+7. **Conversion drives more data** — more partners, more objectives, better matches
+8. **Repeat**
+
+This is product-led growth powered by the OKR module. The free tier is not a limited version of the paid tier — it is the entry point that makes the paid tier irresistible. You come for the OKRs. You stay for the integrations.
+
+The beauty is that every user who enters their objectives — even if they never pay — makes the platform smarter. Their data enriches the matching engine. Their presence makes the corridor more visible. Their goals become signals that attract the right partners.
+
+This is potentially the go-to-market strategy for SIA Portal: **free objectives, paid connections.**
+
+---
+
 ## What Success Looks Like
 
 The MVP succeeds when the first real MoU is signed through the platform. When a Saudi investor and a Malaysian company find each other through SIA, define their terms collaboratively, sign documents digitally, and start an integration journey that creates real value for both.
