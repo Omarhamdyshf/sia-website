@@ -111,7 +111,7 @@ export function RevenueBreakdownPage() {
                 <td>
                   <button
                     onClick={() => removeSubTier(tier.id)}
-                    className="text-red-400 hover:text-red-300 text-sm px-2 py-1"
+                    className="delete-row-btn text-red-400 hover:text-red-300 text-sm px-2 py-1"
                     title="Delete"
                   >
                     &times;
@@ -125,7 +125,7 @@ export function RevenueBreakdownPage() {
 
       <button
         onClick={addSubTier}
-        className="px-4 py-2 rounded text-sm font-medium border border-[var(--accent)] hover:bg-[var(--accent)]/10 transition"
+        className="add-row-btn px-4 py-2 rounded text-sm font-medium border border-[var(--accent)] hover:bg-[var(--accent)]/10 transition"
         style={{ color: 'var(--accent)' }}
       >
         + Add Tier
@@ -181,7 +181,7 @@ export function RevenueBreakdownPage() {
                 <td>
                   <button
                     onClick={() => removeAddOn(addon.id)}
-                    className="text-red-400 hover:text-red-300 text-sm px-2 py-1"
+                    className="delete-row-btn text-red-400 hover:text-red-300 text-sm px-2 py-1"
                     title="Delete"
                   >
                     &times;
@@ -202,7 +202,7 @@ export function RevenueBreakdownPage() {
 
       <button
         onClick={addAddOn}
-        className="px-4 py-2 rounded text-sm font-medium border border-[var(--accent)] hover:bg-[var(--accent)]/10 transition"
+        className="add-row-btn px-4 py-2 rounded text-sm font-medium border border-[var(--accent)] hover:bg-[var(--accent)]/10 transition"
         style={{ color: 'var(--accent)' }}
       >
         + Add Add-on

@@ -388,3 +388,18 @@
 .gold-toggle.active::after {
   transform: translateX(18px);
 }
+
+/* ─── Read-Only Mode (non-admin investors) ─── */
+.read-only input,
+.read-only select,
+.read-only textarea,
+.read-only .gold-slider {
+  pointer-events: none;
+  opacity: 0.6;
+}
+.read-only button.add-row-btn,
+.read-only button.delete-row-btn,
+.read-only .scenario-selector,
+.read-only .reset-btn {
+  display: none;
+}
