@@ -1,0 +1,93 @@
+Story ID,Epic,Module,User Story,User Type,Priority,Sprint,Phase,Effort (S/M/L/XL),Dependencies,Acceptance Criteria
+AUTH-01,Authentication,Platform,As a user I can sign in with Google so I can access the portal,All,P0 - Critical,1,MVP,M,,User clicks Google button → Mujarrad OAuth → JWT stored → redirected to /home
+AUTH-02,Authentication,Platform,As a user I am redirected to login if I try to access a protected page,All,P0 - Critical,1,MVP,S,AUTH-01,Unauthenticated user hitting /home gets redirected to /login
+AUTH-03,Authentication,Platform,As a user I can log out and my session is cleared,All,P0 - Critical,1,MVP,S,AUTH-01,JWT removed from storage. User redirected to /login
+AUTH-04,Authentication,Platform,As a user I can sign in with email and password with 2FA,All,P2 - Nice to Have,—,Phase 2,L,AUTH-01,Email/password registration + TOTP 2FA
+AUTH-05,Authentication,Platform,As a corporate user I can sign in with Microsoft SSO,All,P2 - Nice to Have,—,Phase 2,L,AUTH-01,Microsoft OAuth flow integrated
+REG-01,Partner Registry,M1,As a new user I complete a multi-step onboarding form tailored to my user type,All,P0 - Critical,1,MVP,L,AUTH-01,4 onboarding paths (investor/company/gov/startup). 2-4 fields per step. Progress bar. Data saved to Mujarrad
+REG-02,Partner Registry,M1,As a user I see my profile completeness score with prompts to fill missing sections,All,P1 - Important,1,MVP,M,REG-01,Score shown on Partner Home. Clicking prompt navigates to incomplete section
+REG-03,Partner Registry,M1,As a user I can upload documents (company registration / mandates / MOUs / credentials),All,P0 - Critical,1,MVP,M,REG-01,File upload. Files stored and linked to partner profile in Mujarrad
+REG-04,Partner Registry,M1,As a user I can edit my profile and changes are version-tracked,All,P1 - Important,1,MVP,S,REG-01,Edit form pre-filled with current data. Mujarrad versioning logs changes
+REG-05,Partner Registry,M1,As a user I can optionally enable a public-facing partner card with privacy controls,All,P1 - Important,1,MVP,M,REG-01,Toggle public/private. Choose which fields visible. Preview card
+REG-06,Partner Registry,M1,As an admin I can review partner documents and approve/reject verification badges,SIA Admin,P0 - Critical,1,MVP,M,REG-03,Verification queue. Approve/reject with reason. Badge shown on partner card
+ORG-01,Organization,Platform,As a user I can create an organization during onboarding,All,P0 - Critical,1,MVP,M,REG-01,Org created with name + business profile. User becomes owner
+ORG-02,Organization,Platform,As an org owner I can invite members by email,All,P0 - Critical,1,MVP,M,ORG-01,Enter email → invitee receives link → signs up/logs in with Gmail → joins org
+ORG-03,Organization,Platform,As an invited user I can join an org by signing up or logging in with Gmail,All,P0 - Critical,1,MVP,M,"ORG-02,AUTH-01",Invitation link → Google OAuth → auto-added to org. Full access
+ORG-04,Organization,Platform,As an org member I see the same dashboard / engagements / documents as all other members,All,P0 - Critical,1,MVP,S,ORG-01,No role-based restrictions in MVP. Equal access for all members
+ORG-05,Organization,Platform,As an org owner I can manage team members in settings,All,P1 - Important,1,MVP,S,ORG-01,View members list. Remove member option
+ORG-06,Organization,Platform,As an admin I can assign role-based access within an org,All,P2 - Nice to Have,—,Phase 2,L,ORG-01,Owner/Admin/Member roles with different permission levels
+HOME-01,Partner Home,Platform,As a user I see my Partner Home dashboard after login,All,P0 - Critical,1,MVP,L,"AUTH-01,REG-01",Dashboard shows: welcome + profile summary + action items + relationships + activity feed
+HOME-02,Partner Home,Platform,As a user I see Action Required items (signatures needed / info requested / new matches),All,P0 - Critical,1,MVP,M,HOME-01,Action cards with direct links to resolve each item
+HOME-03,Partner Home,Platform,As a user I see my active relationships with current status and tier progress,All,P0 - Critical,1,MVP,M,"HOME-01,REL-01",Relationship cards showing partner name + status + tier + progress bar
+HOME-04,Partner Home,Platform,As a user I see a recent activity feed,All,P1 - Important,1,MVP,M,HOME-01,Chronological list of events: stage changes / docs uploaded / signatures / matches
+HOME-05,Partner Home,Platform,As a user I see my portfolio summary on the dashboard,All,P1 - Important,3,MVP,S,"HOME-01,PORT-01",Asset count + total value + sector breakdown
+MATCH-01,AI Matching,M2,As an admin I can manually create a match between two partners,SIA Admin,P0 - Critical,2,MVP,M,REG-01,Select two partners → create match → both see match card
+MATCH-02,AI Matching,M2,As a user I see match suggestions with match cards (who / why / strength score),All,P0 - Critical,2,MVP,L,MATCH-01,Match list page. Each card shows partner info + match reason + score
+MATCH-03,AI Matching,M2,As a user I can accept or decline a match suggestion,All,P0 - Critical,2,MVP,M,MATCH-02,Accept/decline buttons. Two-way: both must accept before connection
+MATCH-04,AI Matching,M2,As a user I can filter matches by country / sector / investment size / entity type,All,P1 - Important,2,MVP,M,MATCH-02,Filter controls on matches page. Results update in real-time
+MATCH-05,AI Matching,M2,As a user I see my full match history (shown / accepted / rejected / pending),All,P1 - Important,2,MVP,S,MATCH-02,History tab on matches page with status per match
+MATCH-06,AI Matching,M2,As a user I see an opportunity board with active opportunities ranked by relevance,All,P2 - Nice to Have,—,Phase 2,XL,MATCH-02,Wider Labs powered feed of opportunities
+MATCH-07,AI Matching,M2,As a user I can see an AI explanation of why I was matched with a partner,All,P2 - Nice to Have,—,Phase 2,L,MATCH-02,Wider Labs natural language match explanation
+MATCH-08,AI Matching,M2,Wider Labs auto-generates match suggestions within 24h of profile completion,All,P2 - Nice to Have,—,Phase 2,XL,"REG-01,MATCH-01",Automated matching algorithm replaces manual admin matching
+REL-01,Relationship Management,M3,As a user I see a relationship dashboard grouped by status,All,P0 - Critical,2,MVP,L,MATCH-03,List view: new / in conversation / MOU stage / active / dormant
+REL-02,Relationship Management,M3,As a user I see a chronological timeline for each relationship,All,P0 - Critical,2,MVP,M,REL-01,Timeline of: status changes / documents / meetings / signatures
+REL-03,Relationship Management,M3,As a user both parties must confirm status progression (introduced → engaged → negotiating → formalised → active),All,P0 - Critical,2,MVP,M,REL-01,Status change requires both parties to confirm. Notification sent
+REL-04,Relationship Management,M3,As a user I can log a meeting with date / attendees / summary / outcome,All,P1 - Important,2,MVP,M,REL-01,Meeting form. Entry appended to relationship timeline
+REL-05,Relationship Management,M3,As a user I can share documents privately within a relationship,All,P0 - Critical,2,MVP,M,REL-01,Upload doc → visible only to both parties. Stored per relationship
+REL-06,Relationship Management,M3,As a user I can add internal notes and tags to a relationship,All,P1 - Important,2,MVP,S,REL-01,Notes visible only to me. Tags for quick filtering
+REL-07,Relationship Management,M3,As a user I receive alerts when a relationship is inactive or the other party updates their profile,All,P1 - Important,2,MVP,M,REL-01,In-app notification. Configurable thresholds
+REL-08,Relationship Management,M3,Wider Labs calculates relationship health scores dynamically,All,P2 - Nice to Have,—,Phase 2,XL,REL-01,Score based on recency / activity / stage / engagement depth
+REL-09,Relationship Management,M3,As an admin I see a Kanban view of all relationships,SIA Admin,P2 - Nice to Have,—,Phase 2,L,REL-01,Drag-and-drop Kanban columns by status
+DOC-01,Document Management,Platform,As a user I can upload and download documents in my org vault,All,P0 - Critical,1,MVP,M,ORG-01,Upload files. List view with name / type / date / size. Download
+DOC-02,Document Management,Platform,As a user documents are tied to specific engagements / relationships / journey tiers,All,P0 - Critical,2,MVP,M,"DOC-01,REL-01",Documents linked to context (relationship / journey). Visible in timeline
+DOC-03,Document Management,Platform,As a user document changes are version-tracked,All,P1 - Important,—,Phase 2,M,DOC-01,Upload new version. Previous versions accessible
+DOC-04,Document Management,Platform,As a user I can set per-document permissions,All,P2 - Nice to Have,—,Phase 2,M,DOC-01,Control who can view/download each document
+SIG-01,Digital Signatures,Platform,As a user I can draw or type my signature on a document,All,P0 - Critical,1,MVP,L,DOC-01,Canvas-based signature pad. Type option. Preview before submit
+SIG-02,Digital Signatures,Platform,As a user (or SIA admin) I can request signatures from one or multiple org members,All,P0 - Critical,1,MVP,L,SIG-01,Select signers → each gets notification → sign independently
+SIG-03,Digital Signatures,Platform,As a signer I see pending signature requests in my Action Required section,All,P0 - Critical,1,MVP,M,"SIG-02,HOME-02",Action card links to doc → review → sign
+SIG-04,Digital Signatures,Platform,As a user all signatures include audit trail (timestamp / IP / identity / doc hash),All,P0 - Critical,1,MVP,M,SIG-01,Audit data stored per signature. Viewable in document detail
+SIG-05,Digital Signatures,Platform,As a user when all signers complete a tier-gated signature the journey advances automatically,All,P1 - Important,3,MVP,M,"SIG-02,INT-01",Completion triggers stage/tier transition. Both parties notified
+SIG-06,Digital Signatures,Platform,As an admin I can create signature templates for common documents,SIA Admin,P2 - Nice to Have,—,Phase 2,L,SIG-01,Reusable templates: NDA / MOU / term sheet
+PORT-01,Portfolio Management,M4,As a user I see my portfolio dashboard with all assets,All,P0 - Critical,3,MVP,L,REG-01,Visual summary: asset list / total value / sector breakdown
+PORT-02,Portfolio Management,M4,As a user I can add portfolio entries (company / project / asset / program) with structured fields,All,P0 - Critical,3,MVP,M,PORT-01,Add form: name / type / status / sector / valuation / description
+PORT-03,Portfolio Management,M4,As an investor I see a deal tracker with active investments / committed capital / pipeline / exits,GCC Investor,P0 - Critical,3,MVP,M,PORT-01,Investor-specific portfolio view with deal lifecycle
+PORT-04,Portfolio Management,M4,As a company I see a project/asset registry with live projects / infrastructure / products,Malaysian Company,P0 - Critical,3,MVP,M,PORT-01,Company-specific portfolio view
+PORT-05,Portfolio Management,M4,As a government entity I see a program registry with bilateral agreements / MOUs / mandates,Government Entity,P1 - Important,3,MVP,M,PORT-01,Government-specific portfolio view
+PORT-06,Portfolio Management,M4,As a user I can generate a shareable permission-controlled portfolio view,All,P1 - Important,3,MVP,M,PORT-01,Generate read-only link with token. Choose which entries to include
+PORT-07,Portfolio Management,M4,Wider Labs generates portfolio health insights and diversification analysis,All,P2 - Nice to Have,—,Phase 2,XL,PORT-01,AI-powered gap analysis / overconcentration warnings / suggestions
+FIN-01,Financial Model,M5,As a startup/company I can build a structured financial model via guided form,Startup / Malaysian Company,P0 - Critical,3,MVP,L,REG-01,Form: revenue model / revenue / funding ask / use of funds / runway / team / traction
+FIN-02,Financial Model,M5,As a startup/company I choose a model type (pre-revenue / revenue-stage / infra co-invest / gov program),Startup / Malaysian Company,P0 - Critical,3,MVP,S,FIN-01,Type selection drives which form fields appear
+FIN-03,Financial Model,M5,As a startup/company my model renders as a standardised financial summary card,Startup / Malaysian Company,P0 - Critical,3,MVP,M,FIN-01,Card format: key metrics / ask / traction — comparable across models
+FIN-04,Financial Model,M5,As a startup/company my model is only visible to matched + accepted investors,Startup / Malaysian Company,P0 - Critical,3,MVP,M,"FIN-01,MATCH-03",Visibility check: must have mutual match before model data is served
+FIN-05,Financial Model,M5,As an investor I can express interest in a financial model with one action,GCC Investor,P0 - Critical,3,MVP,S,"FIN-03,MATCH-02",Interest button → notifies company → initiates M3 relationship if not exists
+FIN-06,Financial Model,M5,As a startup/company I can update my model and interested investors are notified,Startup / Malaysian Company,P1 - Important,3,MVP,M,FIN-01,Versioning via Mujarrad. Notification to investors who expressed interest
+FIN-07,Financial Model,M5,Wider Labs generates AI commentary on financial model (strengths / risks / comparables),All,P2 - Nice to Have,—,Phase 2,XL,FIN-01,AI analysis card alongside financial summary
+INT-01,Integration Journey,M6,As a user in an engaged relationship I can start an integration journey (both parties opt in),All,P0 - Critical,3,MVP,M,REL-03,Launch button on relationship detail when status = 'engaged'. Both must confirm
+INT-02,Integration Journey,M6,As a user I see a journey progress tracker with tier / completion % / next action,All,P0 - Critical,3,MVP,M,INT-01,Visual stepper: Tier 1 → 2 (MVP). Shows current position + next required action
+INT-03,Integration Journey,M6,Tier 1 — Service Level: define first action and both parties sign off digitally,All,P0 - Critical,3,MVP,M,"INT-01,SIG-01",Form to define action/service. Digital signature gate for both parties
+INT-04,Integration Journey,M6,Tier 2 — Business Level: upload MOU / define project scope / assign lead / set milestones,All,P0 - Critical,3,MVP,L,"INT-03,SIG-01",MOU upload + project form + milestone tracker. SIA notified for facilitation
+INT-05,Integration Journey,M6,As a user each journey tier has a document vault for auditable storage,All,P0 - Critical,3,MVP,M,"INT-01,DOC-01",Documents organized by tier within journey. Immutable once signed
+INT-06,Integration Journey,M6,As a user I receive step-by-step notifications guiding me to the next action,All,P1 - Important,3,MVP,M,INT-01,In-app + email prompts when action is needed
+INT-07,Integration Journey,M6,Tier 3 — Company Level: co-founder matching / equity / incorporation / term sheet / legal review,All,P2 - Nice to Have,—,Phase 2,XL,INT-04,Full company formation workflow. Legal review gate
+INT-08,Integration Journey,M6,Tier 4A — Regulatory (Existing): SIA allocates regulations / compliance checklist generated,All,P2 - Nice to Have,—,Phase 2,XL,INT-04,Country+sector-specific checklist. SIA assigns relevant frameworks
+INT-09,Integration Journey,M6,Tier 4B — Regulatory (New Frontier): flagged for SIA government relations escalation,All,P2 - Nice to Have,—,Phase 2,L,INT-04,Escalation request logged + tracked in admin panel
+INT-10,Integration Journey,M6,Tier 5 — Diplomatic: SIA admin approval / formal bilateral program entry,Government Entity,P2 - Nice to Have,—,Phase 2,L,INT-08,Admin approval gate. Gov entity portal entry created
+ADMIN-01,Admin Panel,Platform,As an admin I see a partner verification queue to approve/reject badges,SIA Admin,P0 - Critical,1,MVP,M,REG-03,Queue of unverified partners. View docs. Approve/reject with reason
+ADMIN-02,Admin Panel,Platform,As an admin I can manually create a match between two partners,SIA Admin,P0 - Critical,2,MVP,M,REG-01,Search + select two partners → create match → both notified
+ADMIN-03,Admin Panel,Platform,As an admin I see all active relationships with health and tier status,SIA Admin,P0 - Critical,2,MVP,M,REL-01,Table view: all relationships. Filter by status / tier / sector
+ADMIN-04,Admin Panel,Platform,As an admin I see a simplified analytics dashboard,SIA Admin,P1 - Important,2,MVP,L,"REG-01,MATCH-01,REL-01",Counts: active partners / matches / relationships / journeys / models
+ADMIN-05,Admin Panel,Platform,As an admin I can send platform-wide or targeted announcements,SIA Admin,P1 - Important,1,MVP,M,,Compose announcement. Select audience (all / by type / specific partners)
+ADMIN-06,Admin Panel,Platform,As an admin I see an integration escalation queue for Tier 4B and 5,SIA Admin,P2 - Nice to Have,—,Phase 2,M,INT-09,Queue of escalated partnerships requiring gov relations support
+NOTIF-01,Notifications,Platform,As a user I see in-app toast notifications for key events,All,P0 - Critical,1,MVP,S,,Toast via sonner on: signature request / stage change / match / invitation
+NOTIF-02,Notifications,Platform,As a user I receive email notifications for signature requests and stage changes,All,P1 - Important,2,MVP,M,NOTIF-01,Email sent via backend. Unsubscribe option
+NOTIF-03,Notifications,Platform,As a user I can configure my notification preferences,All,P2 - Nice to Have,—,Phase 2,M,NOTIF-01,Per-event toggle: in-app / email / off
+I18N-01,Localization,Platform,As a user I can switch between English and Arabic (RTL),All,P0 - Critical,1,MVP,S,,Language toggle. All UI / forms / labels switch. RTL layout applied
+I18N-02,Localization,Platform,As a user I can use the platform in Bahasa Malaysia,All,P2 - Nice to Have,—,Phase 2,M,I18N-01,Third language option. All strings translated
+AUDIT-01,Audit Trail,Platform,All state changes / signatures / uploads are logged immutably via Mujarrad versioning,All,P0 - Critical,1,MVP,S,,Automatic via Mujarrad node versioning. No user action needed
+AUDIT-02,Audit Trail,Platform,As an admin I can export an audit report for compliance,SIA Admin,P2 - Nice to Have,—,Phase 2,M,AUDIT-01,Export PDF/CSV of all actions for a partner / relationship / journey
+NFR-01,Non-Functional,Platform,Page load under 2 seconds on all core pages,All,P0 - Critical,1,MVP,M,,Lighthouse performance score > 90
+NFR-02,Non-Functional,Platform,Mobile-responsive across all core modules,All,P0 - Critical,1,MVP,M,,All pages usable on 375px viewport
+NFR-03,Non-Functional,Platform,E2E encryption for all documents,All,P1 - Important,1,MVP,L,,Documents encrypted at rest and in transit
+NFR-04,Non-Functional,Platform,PDPA (Malaysia) and PDPL (Saudi Arabia) compliant data handling,All,P0 - Critical,1,MVP,L,,Data residency. Consent management. Deletion rights
+NFR-05,Non-Functional,Platform,99.5% uptime with incident response under 4 hours,All,P1 - Important,1,MVP,M,,Monitoring + alerting configured
+NFR-06,Non-Functional,Platform,Architecture supports 500 concurrent partners scalable to 5000,All,P1 - Important,1,MVP,M,,Load tested. No hard bottlenecks
