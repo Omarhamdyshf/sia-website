@@ -31,7 +31,7 @@ User → Google Login (Mujarrad) → Select request type → Tally-style form �
 |---|--------|-----------|---------|-----------|
 | **1** | **Authentication** | Google OAuth via Mujarrad. JWT in Zustand + localStorage. Protected routes | Add email/password option | Mujarrad-Frontend (own) |
 | **2** | **Business Profile & Organizations** | Shared org account. Invite members by email → they sign up with Gmail → join same org. All members have equal access. Org profile: company name, registration, country, sector, description | Teams under org with role-based access | — |
-| **3** | **Request Intake (Tally-style)** | One-question-at-a-time flow (like Tally.so). Clean, focused, conversational. 3 request types hardcoded: Deal Inquiry, Partnership, Consultation. Each type has its own question sequence | Dynamic form builder. Mujarrad-Frontend upgraded to Tally-style form engine. Admin creates form sequences | Tally.so (UX reference), Mujarrad-Frontend (base to upgrade) |
+| **3** | **Request Intake (Multi-step)** | Clean multi-step form (Tally-inspired, simplified). 2-4 fields per step, progress bar, smooth transitions. 3 request types hardcoded: Deal Inquiry, Partnership, Consultation | Dynamic form builder. Mujarrad-Frontend upgraded to configurable form engine. Admin creates form sequences | Tally.so (UX inspiration), shadcn Form + Framer Motion |
 | **4** | **Process Stages** | Hardcoded stages per request type. Linear progression. Status stored in Mujarrad | XyOps integration for configurable process definitions. Each step as a workflow node. Branching, parallel stages, conditions | XyOps (own) |
 | **5** | **Status Dashboard** | User sees all org requests in a table. Each shows: type, current stage, progress bar, date submitted. Click to see detail | Filters, search, sort. Kanban view for admin | shadcn-admin (Vite + shadcn) |
 | **6** | **Request Detail & Timeline** | Vertical timeline: every stage change, document upload, signature event. Current stage highlighted. Next action shown | Comments, internal notes (admin-only) | Peppermint (ticket history) |
@@ -82,38 +82,31 @@ No roles in MVP — everyone has equal access.
 
 ---
 
-## Tally.so-Style Form Experience
+## Multi-Step Form Experience (Tally-inspired, simplified)
 
-Instead of a traditional form with all fields visible, the intake experience is conversational:
+Clean multi-step form — a few related fields per step, not a wall of inputs. Inspired by Tally.so but kept simple.
 
 ```
-Screen 1: "What type of request?"
-           [Deal Inquiry]  [Partnership]  [Consultation]
+Step 1: Request type selection
+        [Deal Inquiry]  [Partnership]  [Consultation]
 
-Screen 2: "What's your company name?"
-           [____________________]
+Step 2: Company details
+        Company name, country, website
 
-Screen 3: "Which sector?"
-           [Halal & Food]  [Healthcare]  [Real Estate]  ...
+Step 3: Request specifics (varies by type)
+        Sector, deal size, target market, etc.
 
-Screen 4: "Estimated deal size?"
-           [$2M-$5M]  [$5M-$15M]  [$15M-$50M]
+Step 4: Description + documents
+        Textarea + file upload
 
-Screen 5: "Tell us about the opportunity"
-           [textarea]
-
-Screen 6: "Upload any supporting documents"
-           [Drop files here]
-
-Screen 7: ✓ "Request submitted! We'll review within 48 hours."
+Step 5: ✓ Confirmation — "Submitted! We'll review within 48 hours."
 ```
 
-- One question per screen
+- 2-4 fields per step (grouped logically)
 - Progress bar at top
-- Keyboard navigation (Enter to advance)
-- Smooth transitions (Framer Motion)
-- Mobile-first
-- Builds on Mujarrad-Frontend (upgrade to this UX)
+- Smooth step transitions (Framer Motion)
+- Mobile-friendly
+- Back/Next navigation
 
 ---
 
@@ -139,7 +132,7 @@ Screen 7: ✓ "Request submitted! We'll review within 48 hours."
 | AuthStore (Zustand) | — | Copy from Mujarrad-Frontend |
 | ProtectedRoute | — | Copy from Mujarrad-Frontend |
 | OrgOnboarding | Card, Input, Button | New |
-| TallyForm (one-question-at-a-time) | Input, Select, Textarea, Button, Progress | New (core component) |
+| MultiStepForm | Input, Select, Textarea, Button, Progress | New |
 | ProcessTypeSelector | Card, Badge | New |
 | RequestList | Table, Badge, Progress | New |
 | RequestDetail | Card, Badge, Separator | New |
@@ -181,8 +174,7 @@ Form: name, company, role, topic, preferred language, message
 |------|------|-------|-------------|
 | Dashboard shell (sidebar, tables) | satnaing/shadcn-admin | 11.8k | **Exact** (Vite + React + TS + shadcn) |
 | Auth (Google OAuth, store, protected routes) | Mujarrad-Frontend (own) | — | **Exact** |
-| Tally-style form UX | Tally.so | — | UX reference only |
-| Form engine base | Mujarrad-Frontend (own) | — | To be upgraded |
+| Multi-step form UX | Tally.so | — | UX inspiration (simplified) |
 | Ticket lifecycle (submit → track) | Peppermint | 3.1k | Medium (Next.js) |
 | Digital signatures | Documenso | 9k | High (Next.js + TS + Prisma) |
 | Document sharing | Papermark | 6k | High (Next.js + TS) |
@@ -195,8 +187,8 @@ Form: name, company, role, topic, preferred language, message
 1. **Auth** — Copy Google OAuth from Mujarrad-Frontend, adapt for Vite
 2. **Routing** — Add react-router-dom, set up pages (landing, login, dashboard, request, settings)
 3. **Org onboarding** — Simple org creation form, store in Mujarrad
-4. **Tally-style form** — Build the one-question-at-a-time component with Framer Motion transitions
-5. **3 request types** — Hardcoded question sequences, submit to Mujarrad API
+4. **Multi-step form** — Build clean step-based form with Framer Motion transitions (2-4 fields per step)
+5. **3 request types** — Hardcoded form steps per type, submit to Mujarrad API
 6. **Dashboard** — Fetch requests, render with shadcn Table + Badge + Progress
 7. **Request detail** — Timeline + document list + signature status
 8. **Signatures** — Canvas-based signature capture, multi-signer support, PDF embedding
