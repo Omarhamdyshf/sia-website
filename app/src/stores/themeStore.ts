@@ -1,15 +1,13 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 
 type Theme = 'light' | 'dark';
 
 interface ThemeState {
   theme: Theme;
   setTheme: (theme: Theme) => void;
-  toggleTheme: () => void;
 }
 
-function applyTheme(theme: Theme) {
+export function applyTheme(theme: Theme) {
   document.documentElement.setAttribute('data-theme', theme);
   if (theme === 'dark') {
     document.documentElement.classList.add('dark');
@@ -18,40 +16,13 @@ function applyTheme(theme: Theme) {
   }
 }
 
-function getInitialTheme(): Theme {
-  const stored = localStorage.getItem('sia-theme-storage');
-  if (stored) {
-    try {
-      const parsed = JSON.parse(stored);
-      return parsed.state?.theme || 'dark';
-    } catch {
-      return 'dark';
-    }
-  }
-  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-}
+// Default to dark (main website)
+applyTheme('dark');
 
-const initial = getInitialTheme();
-applyTheme(initial);
-
-export const useThemeStore = create<ThemeState>()(
-  persist(
-    (set) => ({
-      theme: initial,
-      setTheme: (theme) => {
-        applyTheme(theme);
-        set({ theme });
-      },
-      toggleTheme: () => {
-        set((state) => {
-          const next = state.theme === 'light' ? 'dark' : 'light';
-          applyTheme(next);
-          return { theme: next };
-        });
-      },
-    }),
-    {
-      name: 'sia-theme-storage',
-    }
-  )
-);
+export const useThemeStore = create<ThemeState>()((set) => ({
+  theme: 'dark',
+  setTheme: (theme) => {
+    applyTheme(theme);
+    set({ theme });
+  },
+}));

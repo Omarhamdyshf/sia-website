@@ -1,8 +1,9 @@
 import { Outlet } from "react-router-dom";
 import { InvestorSidebar } from "@/components/investor/InvestorSidebar";
 import { InvestorTopbar } from "@/components/investor/InvestorTopbar";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { AdminContext } from "@/components/investor/AdminContext";
+import { useThemeStore } from "@/stores/themeStore";
 
 export function InvestorLayout() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -26,6 +27,10 @@ export function InvestorLayout() {
     sessionStorage.removeItem('sia-admin');
     setIsAdmin(false);
   }, []);
+
+  // Force light mode for investor portal
+  const setTheme = useThemeStore((s) => s.setTheme);
+  useEffect(() => { setTheme('light'); }, [setTheme]);
 
   return (
     <AdminContext.Provider value={isAdmin}>

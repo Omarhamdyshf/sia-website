@@ -5,7 +5,6 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export function Navbar() {
   const { t, i18n } = useTranslation();
@@ -109,7 +108,6 @@ export function Navbar() {
 
           {/* Right side — CTA + Language + Theme */}
           <div className="hidden lg:flex items-center gap-3 shrink-0">
-            <ThemeToggle className="text-white/50 hover:text-white" />
             <button
               onClick={toggleLanguage}
               className="px-3 py-1.5 text-xs font-medium text-white/50 hover:text-white transition-colors border border-white/10 rounded-lg"

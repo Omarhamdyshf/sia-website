@@ -1,5 +1,4 @@
 import { useState, useCallback } from "react";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useNavigate } from "react-router-dom";
 import { Settings } from "lucide-react";
 import { useStore, calcMonthlyForecast, DEFAULTS, SCENARIOS, SCENARIO_META } from "@/stores/financialModel";
@@ -192,8 +191,6 @@ export function InvestorTopbar({ isAdmin, onLogin, onLogout }: InvestorTopbarPro
           <Settings className="w-3.5 h-3.5" />
           <span className="hidden sm:inline">{isAdmin ? "Exit Control Panel" : "Control Panel"}</span>
         </button>
-
-        <ThemeToggle />
 
         {/* Session logout */}
         <button

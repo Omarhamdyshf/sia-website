@@ -1,8 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { useEffect } from "react";
+import { useThemeStore } from "@/stores/themeStore";
 
 export function LoginPage() {
   const navigate = useNavigate();
+
+  // Force light mode for investor login
+  const setTheme = useThemeStore((s) => s.setTheme);
+  useEffect(() => { setTheme('light'); }, [setTheme]);
 
   const handleGoogleLogin = () => {
     localStorage.setItem(
@@ -14,9 +19,6 @@ export function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6" style={{ backgroundColor: "var(--bg)" }}>
-      <div className="absolute top-6 right-6">
-        <ThemeToggle />
-      </div>
       <div className="glass-card glass-card-accent w-full max-w-md p-8 text-center">
         <img src="/images/sia-logo.png" alt="SIA" className="h-12 w-auto mx-auto mb-6" />
         <h1 className="text-2xl font-serif font-bold mb-2" style={{ color: "var(--text)" }}>
