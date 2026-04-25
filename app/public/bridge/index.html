@@ -582,7 +582,11 @@ html[dir="rtl"] .section-tag::before{
 }
 html[dir="rtl"] .section-tag{flex-direction:row-reverse}
 html[dir="rtl"] .pillar .p-tag{flex-direction:row-reverse}
-html[dir="rtl"] .phase-row{grid-template-columns:360px 1fr 96px}
+html[dir="rtl"] .phase-row{grid-template-columns:360px 1fr 96px;direction:rtl}
+html[dir="rtl"] .phase-row .phase-num{order:3;text-align:left}
+html[dir="rtl"] .phase-row > div:nth-child(2){order:2}
+html[dir="rtl"] .phase-row .phase-data{order:1}
+html[dir="rtl"] .phase-row .phase-mini{order:4}
 html[dir="rtl"] .phase-tier{flex-direction:row-reverse}
 html[dir="rtl"] .phase-tier::after{
   background:linear-gradient(270deg,currentColor,transparent);
@@ -678,10 +682,11 @@ html[dir="rtl"] .tg-group{direction:ltr} /* keep EN | AR order stable */
       <a href="#" class="has-dot" style="padding-left:20px">Live</a>
     </div>
     <div class="nav-cta">
-      <div class="tg-group" data-i18n-skip aria-label="Language">
+      <!-- Language toggle hidden until RTL mobile issues are resolved -->
+      <!--<div class="tg-group" data-i18n-skip aria-label="Language">
         <button class="tg-btn" data-lang-opt="en">EN</button>
         <button class="tg-btn" data-lang-opt="ar">عر</button>
-      </div>
+      </div>-->
       <div class="tg-group" data-i18n-skip aria-label="Theme">
         <button class="tg-btn" data-theme-opt="dark" aria-label="Dark">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -917,7 +922,7 @@ html[dir="rtl"] .tg-group{direction:ltr} /* keep EN | AR order stable */
         <div class="section-tag">The corridor <span class="section-tag-num">/ 01</span></div>
       </div>
       <div>
-        <h2 class="section-title">Three nations. <span class="ital">One</span> structured pathway.</h2>
+        <h2 class="section-title"><span>Three nations.</span> <span class="ital">One structured</span> <span>pathway.</span></h2>
         <p class="section-desc" style="margin-top:24px">Each side already has what the others need. The corridor formalizes flows that already exist — between deployable capital, ready infrastructure, and operational talent.</p>
       </div>
     </div>
@@ -967,7 +972,7 @@ html[dir="rtl"] .tg-group{direction:ltr} /* keep EN | AR order stable */
           <span class="data-label">Datapoint</span>
           Cyberjaya data center market growing from <strong>USD 6.1 billion in 2025</strong> to <strong>USD 11.4 billion by 2031</strong>. Google, AWS, and TotalEnergies are already anchored in Cyberjaya.
         </div>
-        <div class="phase-mini" data-tier="1"></div>
+        <div class="phase-mini" data-tier="1" data-i18n-skip></div>
       </div>
 
       <div class="phase-row" data-tier="2">
@@ -981,7 +986,7 @@ html[dir="rtl"] .tg-group{direction:ltr} /* keep EN | AR order stable */
           <span class="data-label">Mechanics</span>
           MOU engine routes capital deployment through pre-cleared <strong>shared-asset structures</strong>. Joint ownership recorded across both jurisdictions, executable in days not quarters.
         </div>
-        <div class="phase-mini" data-tier="2"></div>
+        <div class="phase-mini" data-tier="2" data-i18n-skip></div>
       </div>
 
       <div class="phase-row" data-tier="3">
@@ -1000,7 +1005,7 @@ html[dir="rtl"] .tg-group{direction:ltr} /* keep EN | AR order stable */
           <span class="data-label">Stack</span>
           <strong>Wider Labs</strong> as the research backbone. Tri-national legal structure means a single PR-cleared founder team holds residency across all three countries on day one.
         </div>
-        <div class="phase-mini" data-tier="3"></div>
+        <div class="phase-mini" data-tier="3" data-i18n-skip></div>
       </div>
 
       <div class="phase-row" data-tier="4">
@@ -1015,7 +1020,7 @@ html[dir="rtl"] .tg-group{direction:ltr} /* keep EN | AR order stable */
           <strong>Level A — optimize existing.</strong> No new rules required. <br><br>
           <strong>Level B — new frontier.</strong> Both governments create exceptions, visa pathways, and incentive structures that did not exist before SIA.
         </div>
-        <div class="phase-mini" data-tier="4"></div>
+        <div class="phase-mini" data-tier="4" data-i18n-skip></div>
       </div>
 
       <div class="phase-row" data-tier="5">
@@ -1029,7 +1034,7 @@ html[dir="rtl"] .tg-group{direction:ltr} /* keep EN | AR order stable */
           <span class="data-label">Embassy bridge live</span>
           Saudi embassy in Malaysia has a <strong>dedicated budget</strong> for bilateral business and events. Direct access to Minister of Trade and Minister of Technology. <strong>5-year Malaysian residency</strong> for qualified co-founders through MDEC.
         </div>
-        <div class="phase-mini" data-tier="5"></div>
+        <div class="phase-mini" data-tier="5" data-i18n-skip></div>
       </div>
     </div>
   </div>
@@ -1056,7 +1061,7 @@ html[dir="rtl"] .tg-group{direction:ltr} /* keep EN | AR order stable */
       <span>MALAYSIA →</span>
     </div>
 
-    <div class="network">
+    <div class="network" data-i18n-skip>
       <svg viewBox="0 0 1400 1736" preserveAspectRatio="xMidYMid meet" id="netSvg">
         <defs>
           <filter id="netGlow" x="-40%" y="-40%" width="180%" height="180%">
@@ -1960,22 +1965,10 @@ document.querySelectorAll('.btn-primary').forEach(btn => {
 });
 </script>
 
-<script>
-/* SIA — Localization + Theme engine
-   Toggles language (EN ↔ AR formal MSA) and theme (dark ↔ light).
-   Strategy: walk visible text nodes once at load, keep originals on the node,
-   swap to AR dictionary entries when language flips. Persists to localStorage.
-*/
-(function () {
-  const STORE_LANG = 'sia.lang';
-  const STORE_THEME = 'sia.theme';
+<script src="sia-i18n.js"></script>
 
-  // === Translation dictionary ============================================
-  // Keys are the EXACT trimmed English source string. Anything not in the
-  // dictionary stays as-is (graceful degrade for tokens like "USD", "MDEC").
-  const AR = {
-    // NAV
-    "The Corridor": "الممرّ",
+<!-- Old inline i18n removed — now loaded from sia-i18n.js -->
+<!--
     "Five Phases": "المراحل الخمس",
     "Network": "الشبكة",
     "Three Doors": "الأبواب الثلاثة",
@@ -2294,9 +2287,7 @@ document.querySelectorAll('.btn-primary').forEach(btn => {
       updateToggleUI();
     });
   });
-})();
-
-</script>
+-->
 
 </body>
 </html>

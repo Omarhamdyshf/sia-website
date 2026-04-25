@@ -181,6 +181,45 @@ html[lang="ar"] .closing-sub{
   letter-spacing:0;
   line-height:1.7;
 }
+/* Phase data cards — give Arabic text room to breathe */
+html[lang="ar"] .phase-data{
+  font-size:14px;
+  line-height:1.75;
+  padding:28px;
+}
+html[lang="ar"] .phase-data .data-label{
+  letter-spacing:.06em;
+  margin-bottom:14px;
+}
+/* Pillar cards — wider padding for Arabic */
+html[lang="ar"] .pillar{
+  padding:36px;
+}
+html[lang="ar"] .pillar p{
+  font-size:15px;
+  line-height:1.75;
+}
+html[lang="ar"] .pillar h3{
+  font-family:'IBM Plex Sans Arabic','Geist',sans-serif !important;
+  font-style:normal;
+  line-height:1.2;
+}
+/* Door cards — same treatment */
+html[lang="ar"] .door{
+  padding:36px;
+}
+html[lang="ar"] .door-desc{
+  font-size:15px;
+  line-height:1.75;
+}
+html[lang="ar"] .door-features li{
+  line-height:1.7;
+}
+/* Sub-badges in phase rows */
+html[lang="ar"] .sub-badge{
+  font-size:12px;
+  letter-spacing:.04em;
+}
 
 /* RTL — flip arrows, gutters, alignment */
 html[dir="rtl"] body{text-align:right}
@@ -193,10 +232,40 @@ html[dir="rtl"] .section-tag::before{
 }
 html[dir="rtl"] .section-tag{flex-direction:row-reverse}
 html[dir="rtl"] .pillar .p-tag{flex-direction:row-reverse}
-html[dir="rtl"] .phase-row{grid-template-columns:360px 1fr 96px}
+/* Phase rows — swap columns in RTL: data-card(left) ← text(middle) ← number(right) */
+html[dir="rtl"] .phase-row{
+  grid-template-columns:360px 1fr 96px;
+  direction:rtl;
+}
+/* Reorder: phase-num goes last (rightmost in RTL), data card goes first (leftmost in RTL) */
+html[dir="rtl"] .phase-row .phase-num{
+  order:3;
+  text-align:left;
+}
+html[dir="rtl"] .phase-row > div:nth-child(2){
+  order:2;
+}
+html[dir="rtl"] .phase-row .phase-data{
+  order:1;
+}
+html[dir="rtl"] .phase-row .phase-mini{
+  order:4;
+}
+html[dir="rtl"] .phase-body{
+  max-width:100%;
+}
+html[dir="rtl"] .phase-headline{
+  line-height:1.25;
+}
 html[dir="rtl"] .phase-tier{flex-direction:row-reverse}
 html[dir="rtl"] .phase-tier::after{
   background:linear-gradient(270deg,currentColor,transparent);
+}
+html[dir="rtl"] .sub-badges{
+  align-items:flex-end;
+}
+html[dir="rtl"] .sub-badge{
+  flex-direction:row-reverse;
 }
 html[dir="rtl"] .completion{direction:rtl}
 html[dir="rtl"] .doors{direction:rtl}
@@ -257,6 +326,23 @@ html[data-theme="light"] .tg-btn.is-active{
   background:var(--ink);color:#fff;
 }
 .tg-btn svg{width:13px;height:13px;display:block}
+
+/* SVG text — fix Arabic rendering: use Arabic font, proper bidi, no letter-spacing */
+html[lang="ar"] .pin-label,
+html[lang="ar"] .pin-cap{
+  font-family:'IBM Plex Sans Arabic','Geist',system-ui,sans-serif !important;
+  letter-spacing:0 !important;
+  font-style:normal !important;
+  direction:rtl;
+  unicode-bidi:embed;
+}
+/* Network viz + phase-mini SVGs stay English (geographic, skipped by i18n) */
+html[dir="rtl"] .net-stage text,
+html[dir="rtl"] #netSvg text,
+html[dir="rtl"] .phase-mini text{
+  direction:ltr;
+  unicode-bidi:normal;
+}
 
 /* RTL: keep toggles flowing leading→trailing properly */
 html[dir="rtl"] .nav-cta{gap:8px}

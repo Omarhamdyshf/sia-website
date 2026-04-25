@@ -220,6 +220,52 @@
     "Operating cadence": "الإيقاع التشغيلي",
     "Single cadence · three home jurisdictions": "إيقاع واحد · ثلاث ولايات قضائية",
 
+    // HERO SUB — full paragraph (the i18n walker matches trimmed text nodes)
+    "SIA is the integration corridor between": "SIA هو ممرّ التكامل بين",
+    ". Capital, infrastructure, and operators — already cleared at ministerial, MDEC, and embassy level. Not a roadmap. A bridge that already exists.": ". رأس المال، والبنية التحتية، والمشغّلون — تمّت الموافقة المسبقة على المستوى الوزاري، وMDEC، ومستوى السفارة. ليست خارطة طريق. جسر قائم بالفعل.",
+
+    // HERO META labels
+    "Cyberjaya market by 2031": "سوق سايبرجايا بحلول ٢٠٣١",
+    "MDEC investment '20–'23": "استثمار MDEC ٢٠–٢٣",
+    "MDEC residency package": "حزمة إقامة MDEC",
+
+    // HERO SVG VISUALIZATION — pin labels and captions
+    "Capital.": "رأس المال.",
+    "GCC · SAUDI": "الخليج · السعودية",
+    "MALAYSIA": "ماليزيا",
+    "Infrastructure.": "البنية التحتية.",
+    "EGYPT": "مصر",
+    "Operations.": "العمليات.",
+
+    // THREE PILLARS SECTION — section title
+    "Three nations.": "ثلاث دول.",
+    "One structured": "ممرّ مُهيكَل",
+    "pathway.": "واحد.",
+    "Each side already has what the others need. The corridor formalizes flows that already exist — between deployable capital, ready infrastructure, and operational talent.": "كلّ طرف يمتلك ما يحتاجه الآخرون. الممرّ يُقنّن تدفّقات قائمة بالفعل — بين رأس المال القابل للنشر، والبنية التحتية الجاهزة، والكفاءات التشغيلية.",
+
+    // PILLAR TAGS
+    "SAUDI ARABIA / GCC": "المملكة العربية السعودية / الخليج",
+
+    // PILLAR HEADINGS (Capital/Infrastructure/Operations already in dict above)
+
+    // PILLAR DESCRIPTIONS
+    "Deployable capital through private investors, Vision 2030 programs, and sovereign-adjacent funds — looking for a structured, credible pathway. Saudi embassy in Malaysia maintains a dedicated bilateral budget with direct access to the Minister of Trade and Minister of Technology.": "رأس مال قابل للنشر عبر مستثمرين من القطاع الخاص، وبرامج رؤية ٢٠٣٠، وصناديق شبه سيادية — يبحثون عن مسار مُهيكَل وموثوق. تحتفظ السفارة السعودية في ماليزيا بميزانية ثنائية مخصّصة مع وصول مباشر إلى وزير التجارة ووزير التكنولوجيا.",
+    "Cyberjaya data centers, AI companies, solar farms — with MDEC grants, ministerial access, and 100% halal Islamic financing already in place through Maybank. Google, AWS, and TotalEnergies are already anchored in Cyberjaya. The platform is live.": "مراكز بيانات سايبرجايا، وشركات الذكاء الاصطناعي، ومزارع الطاقة الشمسية — مع منح MDEC، والوصول الوزاري، وتمويل إسلامي حلال ١٠٠٪ قائم بالفعل عبر ماي بنك. جوجل وAWS وتوتال إنرجيز مرتكزون في سايبرجايا بالفعل. المنصّة مفعّلة.",
+
+    // FOOTER
+    "Doors": "الأبواب",
+    "Corridor": "الممرّ",
+    "Partners": "الشركاء",
+    "Capital · GCC": "رأس المال · الخليج",
+    "Infrastructure · MY": "البنية التحتية · ماليزيا",
+    "Founders · Tri-Nat": "المؤسّسون · ثلاثي الجنسيات",
+    "Full Network": "الشبكة الكاملة",
+    "Integration framework (PDF)": "إطار التكامل (PDF)",
+    "Saudi Embassy KL": "السفارة السعودية في كوالالمبور",
+    "CORRIDOR LIVE": "الممرّ مفعّل",
+    "SAUDI INTEGRATION ALLIANCE": "تحالف التكامل السعودي",
+    "The integration corridor between Saudi Arabia, Malaysia, and Egypt. Capital, infrastructure, and operators — already cleared at ministerial, MDEC, and embassy level.": "ممرّ التكامل بين المملكة العربية السعودية وماليزيا ومصر. رأس المال، والبنية التحتية، والمشغّلون — تمّت الموافقة المسبقة على المستوى الوزاري، وMDEC، ومستوى السفارة.",
+
     // Small UI bits
     "/ 01": "/ ٠١",
     "/ 02": "/ ٠٢",

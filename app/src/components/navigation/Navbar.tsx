@@ -106,20 +106,26 @@ export function Navbar() {
             ))}
           </nav>
 
-          {/* Right side — CTA + Language + Theme */}
+          {/* Right side — CTA + Language */}
           <div className="hidden lg:flex items-center gap-3 shrink-0">
-            <button
-              onClick={toggleLanguage}
-              className="px-3 py-1.5 text-xs font-medium text-white/50 hover:text-white transition-colors border border-white/10 rounded-lg"
+            <a
+              href="/bridge"
+              className="px-4 py-2 text-sm font-semibold text-gold border border-gold/40 rounded-lg hover:bg-gold/10 transition-all"
             >
-              {t("nav.langToggle")}
-            </button>
+              The Bridge
+            </a>
             <Link
               to="/investor/login"
               className="px-5 py-2 text-sm font-semibold bg-gold text-charcoal rounded-lg hover:bg-gold-light transition-all hover:shadow-gold-glow"
             >
               Investor Login
             </Link>
+            <button
+              onClick={toggleLanguage}
+              className="px-3 py-1.5 text-xs font-medium text-white/50 hover:text-white transition-colors border border-white/10 rounded-lg"
+            >
+              {t("nav.langToggle")}
+            </button>
           </div>
 
           {/* Mobile Toggle */}
@@ -159,11 +165,21 @@ export function Navbar() {
                   {link.label}
                 </motion.a>
               ))}
+              <motion.a
+                href="/bridge"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.45 }}
+                onClick={() => setMobileOpen(false)}
+                className="text-2xl font-serif text-gold hover:text-gold-light transition-colors"
+              >
+                The Bridge
+              </motion.a>
               <motion.button
                 onClick={toggleLanguage}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.45 }}
+                transition={{ delay: 0.5 }}
                 className="text-lg font-medium text-white/50 hover:text-white transition-colors border border-white/10 rounded-lg px-4 py-2"
               >
                 {t("nav.langToggle")}
@@ -172,7 +188,7 @@ export function Navbar() {
                 href="#contact"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
+                transition={{ delay: 0.55 }}
                 onClick={() => setMobileOpen(false)}
                 className="mt-4 px-8 py-3 bg-gold text-charcoal rounded-lg font-semibold"
               >

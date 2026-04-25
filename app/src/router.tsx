@@ -31,6 +31,14 @@ function LazyWrapper({ children }: { children: React.ReactNode }) {
 
 export const router = createBrowserRouter([
   {
+    path: "/bridge",
+    loader: () => {
+      window.location.href = "/bridge/index.html";
+      return null;
+    },
+    element: null,
+  },
+  {
     element: <PublicLayout />,
     children: [
       { path: "/", element: <HomePage /> },
