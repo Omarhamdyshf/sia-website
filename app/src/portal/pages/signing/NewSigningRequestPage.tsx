@@ -21,6 +21,8 @@ import {
   Trash2,
   Upload,
 } from "lucide-react";
+import { PageShell } from "../../components/PageShell";
+import { PageHeader } from "../../components/PageHeader";
 import { PdfViewer } from "../../components/PdfViewer";
 import {
   SignatureFieldOverlay,
@@ -257,18 +259,9 @@ export function NewSigningRequestPage() {
   };
 
   return (
-    <div className="mx-auto max-w-4xl space-y-6">
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
-          <ArrowLeft className="h-4 w-4" />
-        </Button>
-        <h1
-          className="text-3xl font-bold tracking-tight"
-          style={{ fontFamily: "'Playfair Display', serif" }}
-        >
-          New Signing Request
-        </h1>
-      </div>
+    <PageShell>
+      <div className="mx-auto max-w-4xl space-y-6">
+      <PageHeader title="New Signing Request" backTo="/portal/signing" />
 
       {/* Step indicators */}
       <div className="flex items-center gap-2">
@@ -573,5 +566,6 @@ export function NewSigningRequestPage() {
         </Card>
       )}
     </div>
+    </PageShell>
   );
 }

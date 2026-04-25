@@ -1,5 +1,7 @@
 import { useState, useMemo } from "react";
 import { useList, useUpdate } from "@refinedev/core";
+import { PageShell } from "../../components/PageShell";
+import { PageHeader } from "../../components/PageHeader";
 import { KanbanBoard, type KanbanColumn } from "@/portal/components/KanbanBoard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -121,13 +123,8 @@ export function PipelinePage() {
   const movingOrg = orgs.find((o) => o.id === pendingMove?.itemId);
 
   return (
-    <div className="space-y-6">
-      <h1
-        className="text-2xl font-bold tracking-tight"
-        style={{ fontFamily: "'Playfair Display', serif" }}
-      >
-        Pipeline
-      </h1>
+    <PageShell>
+      <PageHeader title="Pipeline" />
 
       <Tabs defaultValue="board">
         <TabsList>
@@ -205,6 +202,6 @@ export function PipelinePage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </PageShell>
   );
 }

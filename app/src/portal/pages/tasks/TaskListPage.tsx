@@ -29,6 +29,8 @@ import {
 } from "@/components/ui/select";
 import { Plus, ArrowUpDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { PageShell } from "../../components/PageShell";
+import { PageHeader } from "../../components/PageHeader";
 import { useUpdate } from "@refinedev/core";
 import type { Task } from "../../schemas";
 
@@ -131,19 +133,16 @@ export function TaskListPage() {
   const isLoading = refineCore.tableQuery.isLoading;
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h1
-          className="text-3xl font-bold tracking-tight"
-          style={{ fontFamily: "'Playfair Display', serif" }}
-        >
-          Tasks
-        </h1>
-        <Button onClick={() => navigate("/portal/tasks/create")}>
-          <Plus className="mr-2 h-4 w-4" />
-          New Task
-        </Button>
-      </div>
+    <PageShell>
+      <PageHeader
+        title="Tasks"
+        actions={
+          <Button onClick={() => navigate("/portal/tasks/create")}>
+            <Plus className="mr-2 h-4 w-4" />
+            New Task
+          </Button>
+        }
+      />
 
       <div className="flex flex-wrap items-center gap-3">
         <Input
@@ -243,6 +242,6 @@ export function TaskListPage() {
           </Button>
         </div>
       </div>
-    </div>
+    </PageShell>
   );
 }

@@ -20,8 +20,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Pencil, Check, X, ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Pencil, Check, X } from "lucide-react";
+import { PageShell } from "../../components/PageShell";
+import { PageHeader } from "../../components/PageHeader";
 import type { BaseRecord } from "@refinedev/core";
 
 interface EditingRule {
@@ -33,7 +34,6 @@ interface EditingRule {
 }
 
 export function SlaSettingsPage() {
-  const navigate = useNavigate();
   const { result, query } = useList({
     resource: "sla-rules",
     pagination: { mode: "off" },
@@ -85,18 +85,8 @@ export function SlaSettingsPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" onClick={() => navigate("/portal")}>
-          <ArrowLeft className="h-4 w-4" />
-        </Button>
-        <h1
-          className="text-3xl font-bold tracking-tight"
-          style={{ fontFamily: "'Playfair Display', serif" }}
-        >
-          SLA Rules
-        </h1>
-      </div>
+    <PageShell>
+      <PageHeader title="SLA Settings" />
 
       <Card>
         <CardHeader>
@@ -202,6 +192,6 @@ export function SlaSettingsPage() {
           )}
         </CardContent>
       </Card>
-    </div>
+    </PageShell>
   );
 }

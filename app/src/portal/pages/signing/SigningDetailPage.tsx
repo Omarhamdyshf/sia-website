@@ -6,7 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  ArrowLeft,
   CheckCircle2,
   Clock,
   Download,
@@ -15,6 +14,8 @@ import {
   Send,
   XCircle,
 } from "lucide-react";
+import { PageShell } from "../../components/PageShell";
+import { PageHeader } from "../../components/PageHeader";
 import type { BaseRecord } from "@refinedev/core";
 import { PdfViewer } from "../../components/PdfViewer";
 import {
@@ -146,12 +147,7 @@ export function SigningDetailPage() {
   }, [req, fieldsList]);
 
   if (reqQuery.isLoading) {
-    return (
-      <div className="space-y-4">
-        <Skeleton className="h-10 w-64" />
-        <Skeleton className="h-48 w-full" />
-      </div>
-    );
+    return <PageShell loading />;
   }
 
   if (!req) {
@@ -171,44 +167,25 @@ export function SigningDetailPage() {
   const status = req.status as string;
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate("/portal/signing")}
-          >
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
-          <div>
-            <h1
-              className="text-3xl font-bold tracking-tight"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              {req.title as string}
-            </h1>
-            <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
-              <span>{req.pdfFileName as string}</span>
-              <Badge variant={statusVariant[status] ?? "outline"}>
-                {statusLabel[status] ?? status}
-              </Badge>
-            </div>
-          </div>
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline" onClick={handleDownload}>
-            <Download className="mr-2 h-4 w-4" />
-            Download PDF
-          </Button>
-          {(status === "sent" || status === "partially_signed") && (
-            <Button variant="destructive" onClick={handleCancel}>
-              Cancel Request
+    <PageShell>
+      <PageHeader
+        title={req.title as string}
+        backTo="/portal/signing"
+        subtitle={`${req.pdfFileName as string} - ${statusLabel[status] ?? status}`}
+        actions={
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={handleDownload}>
+              <Download className="mr-2 h-4 w-4" />
+              Download PDF
             </Button>
-          )}
-        </div>
-      </div>
+            {(status === "sent" || status === "partially_signed") && (
+              <Button variant="destructive" onClick={handleCancel}>
+                Cancel Request
+              </Button>
+            )}
+          </div>
+        }
+      />
 
       <Tabs defaultValue="signers">
         <TabsList>
@@ -346,6 +323,6 @@ export function SigningDetailPage() {
           </Card>
         </TabsContent>
       </Tabs>
-    </div>
+    </PageShell>
   );
 }

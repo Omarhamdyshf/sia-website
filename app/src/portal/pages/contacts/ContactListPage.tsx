@@ -1,6 +1,8 @@
 import { useList } from "@refinedev/core";
 import { useState, useMemo } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { PageShell } from "../../components/PageShell";
+import { PageHeader } from "../../components/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
@@ -43,19 +45,16 @@ export function ContactListPage() {
   }, [contactsData, search]);
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h1
-          className="text-3xl font-bold tracking-tight"
-          style={{ fontFamily: "'Playfair Display', serif" }}
-        >
-          Contacts
-        </h1>
-        <Button onClick={() => navigate("/portal/contacts/create")}>
-          <Plus className="mr-2 h-4 w-4" />
-          New Contact
-        </Button>
-      </div>
+    <PageShell>
+      <PageHeader
+        title="Contacts"
+        actions={
+          <Button onClick={() => navigate("/portal/contacts/create")}>
+            <Plus className="mr-2 h-4 w-4" />
+            New Contact
+          </Button>
+        }
+      />
 
       <Input
         placeholder="Search by name or email..."
@@ -124,6 +123,6 @@ export function ContactListPage() {
           </Table>
         </CardContent>
       </Card>
-    </div>
+    </PageShell>
   );
 }
