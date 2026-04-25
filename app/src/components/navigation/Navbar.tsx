@@ -54,9 +54,9 @@ export function Navbar() {
             <img
               src="/images/sia-logo.png"
               alt="SIA — Strategic Integration Agency"
-              width="52"
-              height="52"
-              className="h-[52px] w-auto"
+              width="68"
+              height="68"
+              className="h-[68px] w-auto"
             />
           </a>
 
