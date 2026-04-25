@@ -21,7 +21,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Plus, Trash2, ArrowLeft, Loader2 } from "lucide-react";
+import { Plus, Trash2, Loader2 } from "lucide-react";
+import { PageShell } from "../../components/PageShell";
+import { PageHeader } from "../../components/PageHeader";
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -82,27 +84,13 @@ export function OrganizationFormPage() {
   const typeValue = watch("type");
   const statusValue = watch("status");
 
-  if (formLoading) {
-    return (
-      <div className="flex h-64 items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-      </div>
-    );
-  }
-
   return (
-    <div className="mx-auto max-w-2xl space-y-6">
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
-          <ArrowLeft className="h-4 w-4" />
-        </Button>
-        <h1
-          className="text-3xl font-bold tracking-tight"
-          style={{ fontFamily: "'Playfair Display', serif" }}
-        >
-          {isEdit ? "Edit Organization" : "New Organization"}
-        </h1>
-      </div>
+    <PageShell loading={formLoading}>
+      <div className="mx-auto max-w-2xl space-y-6">
+      <PageHeader
+        title={isEdit ? "Edit Organization" : "New Organization"}
+        backTo="/portal/organizations"
+      />
 
       <form onSubmit={handleSubmit(onFinish)} className="space-y-6">
         <Card>
@@ -238,6 +226,7 @@ export function OrganizationFormPage() {
           </Button>
         </div>
       </form>
-    </div>
+      </div>
+    </PageShell>
   );
 }

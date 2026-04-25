@@ -30,6 +30,8 @@ import {
 import { Plus, ArrowUpDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type { Organization } from "../../schemas";
+import { PageShell } from "../../components/PageShell";
+import { PageHeader } from "../../components/PageHeader";
 
 const statusVariant: Record<string, "default" | "secondary" | "outline"> = {
   active: "default",
@@ -101,19 +103,16 @@ export function OrganizationListPage() {
   const isLoading = refineCore.tableQuery.isLoading;
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h1
-          className="text-3xl font-bold tracking-tight"
-          style={{ fontFamily: "'Playfair Display', serif" }}
-        >
-          Organizations
-        </h1>
-        <Button onClick={() => navigate("/portal/organizations/create")}>
-          <Plus className="mr-2 h-4 w-4" />
-          New Organization
-        </Button>
-      </div>
+    <PageShell>
+      <PageHeader
+        title="Organizations"
+        actions={
+          <Button onClick={() => navigate("/portal/organizations/create")}>
+            <Plus className="mr-2 h-4 w-4" />
+            New Organization
+          </Button>
+        }
+      />
 
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-3">
@@ -238,6 +237,6 @@ export function OrganizationListPage() {
           </Button>
         </div>
       </div>
-    </div>
+    </PageShell>
   );
 }

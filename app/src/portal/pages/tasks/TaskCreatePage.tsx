@@ -15,7 +15,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import { PageShell } from "../../components/PageShell";
+import { PageHeader } from "../../components/PageHeader";
 import type { BaseRecord } from "@refinedev/core";
 
 const formSchema = z.object({
@@ -75,18 +77,9 @@ export function TaskCreatePage() {
   };
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6">
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
-          <ArrowLeft className="h-4 w-4" />
-        </Button>
-        <h1
-          className="text-3xl font-bold tracking-tight"
-          style={{ fontFamily: "'Playfair Display', serif" }}
-        >
-          New Task
-        </h1>
-      </div>
+    <PageShell>
+      <div className="mx-auto max-w-2xl space-y-6">
+      <PageHeader title="New Task" backTo="/portal/tasks" />
 
       <form onSubmit={handleSubmit(onFinish)} className="space-y-6">
         <Card>
@@ -161,5 +154,6 @@ export function TaskCreatePage() {
         </div>
       </form>
     </div>
+    </PageShell>
   );
 }

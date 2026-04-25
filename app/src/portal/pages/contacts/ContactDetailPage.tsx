@@ -3,9 +3,10 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Pencil } from "lucide-react";
+import { Pencil } from "lucide-react";
+import { PageShell } from "../../components/PageShell";
+import { PageHeader } from "../../components/PageHeader";
 
 export function ContactDetailPage() {
   const { id } = useParams();
@@ -22,12 +23,7 @@ export function ContactDetailPage() {
   const org = orgQuery.data?.data;
 
   if (contactQuery.isLoading) {
-    return (
-      <div className="space-y-4">
-        <Skeleton className="h-10 w-64" />
-        <Skeleton className="h-48 w-full" />
-      </div>
-    );
+    return <PageShell loading />;
   }
 
   if (!contact) {
@@ -41,31 +37,20 @@ export function ContactDetailPage() {
     );
   }
 
+  const fullName = `${contact.firstName as string} ${contact.lastName as string}`;
+
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" onClick={() => navigate("/portal/contacts")}>
-            <ArrowLeft className="h-4 w-4" />
+    <PageShell>
+      <PageHeader
+        title={fullName}
+        backTo="/portal/contacts"
+        subtitle={contact.role ? (contact.role as string) : undefined}
+        actions={
+          <Button variant="outline" onClick={() => navigate(`/portal/contacts/edit/${id}`)}>
+            <Pencil className="mr-2 h-4 w-4" /> Edit
           </Button>
-          <div>
-            <h1
-              className="text-3xl font-bold tracking-tight"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              {contact.firstName as string} {contact.lastName as string}
-            </h1>
-            {contact.role && (
-              <div className="mt-1">
-                <Badge variant="secondary">{contact.role as string}</Badge>
-              </div>
-            )}
-          </div>
-        </div>
-        <Button variant="outline" onClick={() => navigate(`/portal/contacts/edit/${id}`)}>
-          <Pencil className="mr-2 h-4 w-4" /> Edit
-        </Button>
-      </div>
+        }
+      />
 
       <Tabs defaultValue="overview">
         <TabsList>
@@ -117,6 +102,6 @@ export function ContactDetailPage() {
           </Card>
         </TabsContent>
       </Tabs>
-    </div>
+    </PageShell>
   );
 }

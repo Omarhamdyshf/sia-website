@@ -25,6 +25,8 @@ import {
 import type { BaseRecord } from "@refinedev/core";
 import { KpiCard } from "../../components/KpiCard";
 import { VerticalTimeline, type TimelineEvent } from "../../components/VerticalTimeline";
+import { PageShell } from "../../components/PageShell";
+import { PageHeader } from "../../components/PageHeader";
 import { evaluateSLA, type SLAResult } from "../../lib/sla-engine";
 
 export function PortalDashboardPage() {
@@ -132,13 +134,8 @@ export function PortalDashboardPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <h1
-        className="text-3xl font-bold tracking-tight"
-        style={{ fontFamily: "'Playfair Display', serif" }}
-      >
-        Operations Dashboard
-      </h1>
+    <PageShell loading={isLoading}>
+      <PageHeader title="Operations Dashboard" />
 
       {/* Row 1: KPI Cards */}
       <div className="grid gap-4 md:grid-cols-4">
@@ -296,7 +293,7 @@ export function PortalDashboardPage() {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </PageShell>
   );
 }
 

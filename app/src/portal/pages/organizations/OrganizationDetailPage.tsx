@@ -38,6 +38,8 @@ import type { BaseRecord } from "@refinedev/core";
 import { FileUploader } from "../../components/FileUploader";
 import { VerticalTimeline, type TimelineEvent } from "../../components/VerticalTimeline";
 import { EmailComposeModal } from "../../components/EmailComposeModal";
+import { PageShell } from "../../components/PageShell";
+import { PageHeader } from "../../components/PageHeader";
 
 export function OrganizationDetailPage() {
   const { id } = useParams();
@@ -68,16 +70,7 @@ export function OrganizationDetailPage() {
     setNoteText("");
   };
 
-  if (orgQuery.isLoading) {
-    return (
-      <div className="space-y-4">
-        <Skeleton className="h-10 w-64" />
-        <Skeleton className="h-48 w-full" />
-      </div>
-    );
-  }
-
-  if (!org) {
+  if (!org && !orgQuery.isLoading) {
     return (
       <div className="flex h-64 flex-col items-center justify-center gap-4">
         <p className="text-muted-foreground">Organization not found</p>
@@ -95,39 +88,27 @@ export function OrganizationDetailPage() {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" onClick={() => navigate("/portal/organizations")}>
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
-              {org.name as string}
-            </h1>
-            <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
-              <span className="capitalize">{org.type as string}</span>
-              <Badge variant={statusVariant[(org.status as string) ?? ""] ?? "outline"}>
-                {org.status as string}
-              </Badge>
-            </div>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" onClick={() => setEmailOpen(true)}>
-            <Mail className="mr-2 h-4 w-4" /> Email
-          </Button>
-          <Button variant="outline" asChild>
-            <Link to={`/portal/tasks/create?organizationId=${id}&organizationName=${encodeURIComponent(org.name as string)}`}>
-              <Plus className="mr-2 h-4 w-4" /> New Task
-            </Link>
-          </Button>
-          <Button variant="outline" onClick={() => navigate(`/portal/organizations/edit/${id}`)}>
-            <Pencil className="mr-2 h-4 w-4" /> Edit
-          </Button>
-        </div>
-      </div>
+    <PageShell loading={orgQuery.isLoading}>
+      <PageHeader
+        title={org?.name as string ?? ""}
+        backTo="/portal/organizations"
+        subtitle={`${(org?.type as string) ?? ""} · ${(org?.status as string) ?? ""}`}
+        actions={
+          <>
+            <Button variant="outline" onClick={() => setEmailOpen(true)}>
+              <Mail className="mr-2 h-4 w-4" /> Email
+            </Button>
+            <Button variant="outline" asChild>
+              <Link to={`/portal/tasks/create?organizationId=${id}&organizationName=${encodeURIComponent(org?.name as string ?? "")}`}>
+                <Plus className="mr-2 h-4 w-4" /> New Task
+              </Link>
+            </Button>
+            <Button variant="outline" onClick={() => navigate(`/portal/organizations/edit/${id}`)}>
+              <Pencil className="mr-2 h-4 w-4" /> Edit
+            </Button>
+          </>
+        }
+      />
 
       {/* Tabs */}
       <Tabs defaultValue="overview">
@@ -360,9 +341,9 @@ export function OrganizationDetailPage() {
         onOpenChange={setEmailOpen}
         defaultTo={primaryEmail}
         organizationId={id}
-        organizationName={org.name as string}
+        organizationName={org?.name as string ?? ""}
       />
-    </div>
+    </PageShell>
   );
 }
 

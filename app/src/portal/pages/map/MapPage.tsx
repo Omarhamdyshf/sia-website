@@ -1,6 +1,8 @@
 import { useState, useMemo } from "react";
 import { useList } from "@refinedev/core";
 import { useNavigate } from "react-router-dom";
+import { PageShell } from "../../components/PageShell";
+import { PageHeader } from "../../components/PageHeader";
 import {
   ComposableMap,
   Geographies,
@@ -157,13 +159,8 @@ export function MapPage() {
   }, [markers, stageFilter, typeFilter]);
 
   return (
-    <div className="space-y-6 p-6">
-      <h1
-        className="text-2xl font-bold"
-        style={{ fontFamily: "'Playfair Display', serif" }}
-      >
-        Organization Map
-      </h1>
+    <PageShell>
+      <PageHeader title="Organization Map" />
 
       <div className="flex flex-wrap gap-4">
         <Select value={stageFilter} onValueChange={setStageFilter}>
@@ -283,6 +280,6 @@ export function MapPage() {
           )}
         </CardContent>
       </Card>
-    </div>
+    </PageShell>
   );
 }

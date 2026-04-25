@@ -29,6 +29,8 @@ import {
 } from "@/components/ui/select";
 import { Plus, ArrowUpDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { PageShell } from "../../components/PageShell";
+import { PageHeader } from "../../components/PageHeader";
 import type { SigningRequest } from "../../schemas";
 
 const statusVariant: Record<string, "default" | "secondary" | "outline" | "destructive"> = {
@@ -121,19 +123,16 @@ export function SigningListPage() {
   const isLoading = refineCore.tableQuery.isLoading;
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h1
-          className="text-3xl font-bold tracking-tight"
-          style={{ fontFamily: "'Playfair Display', serif" }}
-        >
-          Documents
-        </h1>
-        <Button onClick={() => navigate("/portal/signing/new")}>
-          <Plus className="mr-2 h-4 w-4" />
-          New Signing Request
-        </Button>
-      </div>
+    <PageShell>
+      <PageHeader
+        title="Documents"
+        actions={
+          <Button onClick={() => navigate("/portal/signing/new")}>
+            <Plus className="mr-2 h-4 w-4" />
+            New Signing Request
+          </Button>
+        }
+      />
 
       <div className="flex flex-wrap items-center gap-3">
         <Input
@@ -256,6 +255,6 @@ export function SigningListPage() {
           </Button>
         </div>
       </div>
-    </div>
+    </PageShell>
   );
 }
