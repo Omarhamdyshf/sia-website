@@ -15,7 +15,7 @@ import { PortalLayout } from "./layouts/PortalLayout";
 const USE_MOCK = import.meta.env.VITE_USE_MOCK === "true";
 
 const dataProvider = USE_MOCK ? mockDataProvider : mujarradDataProvider;
-const authProviderInstance = mockAuthProvider;
+const authProviderInstance = USE_MOCK ? mockAuthProvider : mujarradAuthProvider;
 
 export function PortalApp() {
   return (
