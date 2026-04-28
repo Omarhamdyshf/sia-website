@@ -74,13 +74,15 @@ export function MapPage() {
     y: number;
   } | null>(null);
 
-  const { data, isLoading } = useList<Organization>({
+  const orgList = useList<Organization>({
     resource: "organizations",
     pagination: { pageSize: 500 },
   });
+  const data = orgList.result?.data;
+  const isLoading = orgList.query.isLoading;
 
   const markers = useMemo(() => {
-    if (!data?.data) return [];
+    if (!data) return [];
     const result: Array<{
       id: string;
       orgId: string;
@@ -92,7 +94,7 @@ export function MapPage() {
       coordinates: [number, number];
       isDefault: boolean;
     }> = [];
-    for (const org of data.data) {
+    for (const org of data) {
       const locations = (org as unknown as { locations?: OrgLocation[] }).locations;
       console.log("[MapDebug]", org.name, "locations:", JSON.stringify(locations));
       if (!locations || locations.length === 0) continue;
@@ -208,7 +210,7 @@ export function MapPage() {
                   coordinates={m.coordinates}
                   onClick={() => navigate(`/portal/organizations/${m.orgId}`)}
                   onMouseEnter={(e) => {
-                    const target = e.target as SVGElement;
+                    const target = e.target as SVGGraphicsElement;
                     const ctm = target.getScreenCTM();
                     setTooltip({
                       name: m.name,
@@ -220,7 +222,7 @@ export function MapPage() {
                     });
                   }}
                   onMouseLeave={() => setTooltip(null)}
-                  style={{ cursor: "pointer" } as React.CSSProperties}
+                  style={{ default: { cursor: "pointer" }, hover: { cursor: "pointer" }, pressed: { cursor: "pointer" } }}
                 >
                   <circle
                     r={m.isDefault ? 6 : 4}
