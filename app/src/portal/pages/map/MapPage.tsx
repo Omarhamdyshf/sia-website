@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { useList } from "@refinedev/core";
 import { useNavigate } from "react-router-dom";
 import { PageShell } from "../../components/PageShell";
@@ -220,7 +220,7 @@ export function MapPage() {
                     });
                   }}
                   onMouseLeave={() => setTooltip(null)}
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer" } as React.CSSProperties}
                 >
                   <circle
                     r={m.isDefault ? 6 : 4}

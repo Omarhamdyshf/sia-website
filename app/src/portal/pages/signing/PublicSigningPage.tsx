@@ -11,10 +11,10 @@ import {
 import { mujarradDataProvider } from "../../providers/mujarrad-data-provider";
 import { Button } from "@/components/ui/button";
 import { AnimatedButton } from "../../components/AnimatedButton";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { CheckCircle2, Clock, FileSignature, Loader2, XCircle } from "lucide-react";
+import { CheckCircle2, Clock, FileSignature, XCircle } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -53,7 +53,7 @@ function PublicSigningPageInner() {
     pagination: { mode: "off" },
   });
 
-  const signer = (signersQuery.data?.data ?? [])[0] as BaseRecord | undefined;
+  const signer = (signersQuery.result?.data ?? [])[0] as BaseRecord | undefined;
   const signingRequestId = signer?.signingRequestId as string | undefined;
 
   // Get the signing request
@@ -65,7 +65,7 @@ function PublicSigningPageInner() {
     pagination: { mode: "off" },
     queryOptions: { enabled: !!signingRequestId },
   });
-  const request = (requestQuery.data?.data ?? [])[0] as BaseRecord | undefined;
+  const request = (requestQuery.result?.data ?? [])[0] as BaseRecord | undefined;
 
   // Get fields for this signer
   const fieldsQuery = useList({
@@ -104,9 +104,9 @@ function PublicSigningPageInner() {
   const { mutateAsync: updateSigner } = useUpdate();
   const { mutateAsync: updateRequest } = useUpdate();
 
-  const myFields = (fieldsQuery.data?.data ?? []) as BaseRecord[];
-  const allFields = (allFieldsQuery.data?.data ?? []) as BaseRecord[];
-  const allSigners = (allSignersQuery.data?.data ?? []) as BaseRecord[];
+  const myFields = (fieldsQuery.result?.data ?? []) as BaseRecord[];
+  const allFields = (allFieldsQuery.result?.data ?? []) as BaseRecord[];
+  const allSigners = (allSignersQuery.result?.data ?? []) as BaseRecord[];
 
   const myFieldIds = new Set(myFields.map((f) => f.id as string));
 
@@ -224,7 +224,7 @@ function PublicSigningPageInner() {
   const isExpired = signer?.expiresAt && new Date(signer.expiresAt as string) < new Date();
 
   const isLoading =
-    signersQuery.isLoading || requestQuery.isLoading || fieldsQuery.isLoading;
+    signersQuery.query.isLoading || requestQuery.query.isLoading || fieldsQuery.query.isLoading;
 
   if (isLoading) {
     return (

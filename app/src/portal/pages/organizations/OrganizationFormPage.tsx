@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { AnimatedButton } from "../../components/AnimatedButton";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { AnimatedInput } from "../../components/AnimatedInput";
 import { AnimatedTextarea } from "../../components/AnimatedTextarea";
 import {
@@ -24,11 +23,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Plus, Trash2, Loader2 } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import { PageShell } from "../../components/PageShell";
 import { PageHeader } from "../../components/PageHeader";
 import { LocationEditor } from "../../components/LocationEditor";
-import type { OrgLocation } from "../../components/LocationEditor";
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),

@@ -29,14 +29,6 @@ import {
 import { assemblePdf, type FieldPlacement } from "../../lib/pdf-assembly";
 import { useState, useCallback } from "react";
 
-const statusVariant: Record<string, "default" | "secondary" | "outline" | "destructive"> = {
-  draft: "outline",
-  sent: "secondary",
-  partially_signed: "secondary",
-  completed: "default",
-  cancelled: "destructive",
-};
-
 const statusLabel: Record<string, string> = {
   draft: "Draft",
   sent: "Sent",
@@ -97,8 +89,8 @@ export function SigningDetailPage() {
     });
   };
 
-  const signersList = (signersResult.data?.data ?? []) as BaseRecord[];
-  const fieldsList = (fieldsResult.data?.data ?? []) as BaseRecord[];
+  const signersList = (signersResult.result?.data ?? []) as BaseRecord[];
+  const fieldsList = (fieldsResult.result?.data ?? []) as BaseRecord[];
 
   const appUrl = import.meta.env.VITE_APP_URL ?? window.location.origin;
 
@@ -155,7 +147,7 @@ export function SigningDetailPage() {
       const response = await fetch(req.pdfUrl as string);
       const pdfBytes = new Uint8Array(await response.arrayBuffer());
       const signedPdf = await assemblePdf(pdfBytes, signedFields);
-      const blob = new Blob([signedPdf], { type: "application/pdf" });
+      const blob = new Blob([signedPdf as BlobPart], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -168,7 +160,7 @@ export function SigningDetailPage() {
   }, [req, fieldsList]);
 
   if (reqQuery.isLoading) {
-    return <PageShell loading />;
+    return <PageShell loading>{null}</PageShell>;
   }
 
   if (!req) {
@@ -220,7 +212,7 @@ export function SigningDetailPage() {
               <CardTitle>Signer Progress</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              {signersResult.isLoading ? (
+              {signersResult.query.isLoading ? (
                 <Skeleton className="h-32 w-full" />
               ) : signersList.length > 0 ? (
                 signersList.map((signer) => {
@@ -309,8 +301,8 @@ export function SigningDetailPage() {
                 size="sm"
                 onClick={() => {
                   reqQuery.refetch();
-                  signersResult.refetch();
-                  fieldsResult.refetch();
+                  signersResult.query.refetch();
+                  fieldsResult.query.refetch();
                 }}
               >
                 <RefreshCw className="mr-2 h-4 w-4" />

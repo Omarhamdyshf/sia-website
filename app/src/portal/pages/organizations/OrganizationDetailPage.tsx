@@ -24,7 +24,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {
-  ArrowLeft,
   Pencil,
   Trash2,
   Globe,
@@ -89,12 +88,6 @@ export function OrganizationDetailPage() {
       </div>
     );
   }
-
-  const statusVariant: Record<string, "default" | "secondary" | "outline"> = {
-    active: "default",
-    prospect: "secondary",
-    inactive: "outline",
-  };
 
   return (
     <PageShell loading={orgQuery.isLoading}>

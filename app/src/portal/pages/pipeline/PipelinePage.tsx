@@ -80,7 +80,7 @@ function OrgCard({ org }: { org: Organization }) {
             <Badge variant="outline" className="text-[10px] capitalize">
               {org.type}
             </Badge>
-            <span className="text-xs text-muted-foreground">{org.locations?.find((l) => l.isDefault)?.countryName ?? ""}</span>
+            <span className="text-xs text-muted-foreground">{org.locations?.find((l: { city: string; countryName: string; isDefault: boolean }) => l.isDefault)?.countryName ?? ""}</span>
           </div>
           <div className="text-[10px] text-muted-foreground">
             Updated {formatDate(org.updatedAt)}
@@ -92,10 +92,12 @@ function OrgCard({ org }: { org: Organization }) {
 }
 
 export function PipelinePage() {
-  const { data, isLoading } = useList<Organization>({
+  const { result, query } = useList<Organization>({
     resource: "organizations",
     pagination: { mode: "off" },
   });
+  const data = result;
+  const isLoading = query.isLoading;
   const { mutate: updateOrg } = useUpdate();
 
   const [activeTab, setActiveTab] = useState("board");
@@ -129,7 +131,7 @@ export function PipelinePage() {
   }
 
   const targetStage = PIPELINE_STAGES.find((s) => s.id === pendingMove?.toColumn);
-  const movingOrg = orgs.find((o) => o.id === pendingMove?.itemId);
+  const movingOrg = orgs.find((o: Organization) => o.id === pendingMove?.itemId);
 
   return (
     <PageShell>
@@ -176,7 +178,7 @@ export function PipelinePage() {
                           {org.type}
                         </Badge>
                       </TableCell>
-                      <TableCell>{org.locations?.find((l) => l.isDefault)?.countryName ?? "—"}</TableCell>
+                      <TableCell>{org.locations?.find((l: { city: string; countryName: string; isDefault: boolean }) => l.isDefault)?.countryName ?? "—"}</TableCell>
                       <TableCell>
                         <Badge
                           style={{ backgroundColor: stage?.color, color: "white", borderColor: "transparent" }}
