@@ -186,14 +186,71 @@ There is no way to create a new engagement from the pipeline page. The pipeline 
 ### REQ-F4: Lucid Universal Quick-Add (Separate Proposal)
 See `openspec/changes/lucid-universal-add/proposal.md` — universal "+" button that creates tasks, engagements, notes, contacts, or documents from any page.
 
+### REQ-F5: Kanban Must Show ALL Possible Values as Lanes
+Every group-by criteria must show all possible values as columns/lanes, even if no items exist in that lane. This ensures the user always has a drop target for drag-and-drop and can see the full picture:
+- Group by Status → show Open AND Done columns always
+- Group by Priority → show Critical, High, Medium, Low columns always
+- Group by Engagement → show ALL active engagements as columns always
+- Group by Stage (pipeline) → show ALL stages as columns always
+
+This applies to the task board, the pipeline, and any future Kanban views.
+
+### REQ-F6: Full End-to-End Usability — No Dead Ends
+Every action a user might naturally want to perform must be completable without workarounds:
+- Every entity can be created, viewed, edited, and deleted
+- Every list row is clickable and navigates to a detail page
+- Every FK field (org name, engagement name, contact name) is a clickable link
+- Every form has validation, error display, success feedback, and cancel
+- Every destructive action has confirmation
+- Every Kanban board has all lanes visible for drag-and-drop
+- Every empty state has an action button to create the first item
+- Every loading state shows a skeleton, not blank content
+- Every error shows a user-friendly message, not a crash
+
+### REQ-F7: Top-Down User Journey Review
+Before shipping, verify the complete user journey from a top-down perspective:
+1. User logs in → sees dashboard with KPIs, priority queue, recent tasks
+2. User creates an organization → adds contacts, uploads files, writes notes
+3. User creates engagements for the organization → tracks deals/projects/opportunities
+4. User creates tasks linked to engagements → manages daily work
+5. User uses the pipeline to visualize engagement stages → drags cards between stages
+6. User uses the task board to see tasks grouped by various criteria → drags to reprioritize
+7. User sends a signing request linked to an engagement → tracks signer status
+8. User checks SLA alerts → sees which items need attention
+9. User uses Cmd+K to find anything quickly
+
+Every step must work without friction. Missing steps must be identified and added.
+
 ---
+
+## Implementation Status
+
+### Sprint A — COMPLETED (committed 4877210)
+- [x] C1: Task detail/edit/delete pages
+- [x] C2: Engagements sidebar link
+- [x] C5: Contact form org pre-fill
+- [x] C6: Clickable contact rows in org detail
+- [x] C7: Clickable org/engagement in task list
+- [x] F1: Task board multi-group-by
+- [x] F2: All engagement columns shown
+- [x] F3: Pipeline "New Engagement" button
+- [x] F4: Task board cards clickable
+
+### Sprint B — NEXT
+- [ ] C3: Signing flow toast spam suppression
+- [ ] C4: Global error boundary + signing error toasts
+- [ ] H1-H9: High priority items
+- [ ] F5-F7: Founder feedback items
+
+### Sprint C — POLISH
+- [ ] M1-M20: Medium priority items
 
 ## Summary Counts
 
-| Priority | Count |
-|----------|-------|
-| Critical | 7 |
-| High | 9 |
-| Medium | 20 |
-| Founder feedback | 4 |
-| **Total** | **40** |
+| Priority | Count | Done |
+|----------|-------|------|
+| Critical | 7 | 5 |
+| High | 9 | 0 |
+| Medium | 20 | 0 |
+| Founder feedback | 7 | 4 |
+| **Total** | **43** | **9** |
