@@ -207,13 +207,37 @@ All API calls through `MujarradClient` were failing with 404/500 because `spaceP
 | Version history | PASS | v1 → v2 tracked |
 | Create attribute | PASS | belongs_to relationship |
 | Get attributes | PASS | Returns linked attributes |
-| Delete node | Not tested | Needs verification |
+| Delete node | PASS | 204 response, confirmed via org delete |
+
+---
+
+## QC Execution Details
+
+**Team:** portal-qc (4 parallel agents)
+**Agents:**
+- **auth-qc** — Task #1 (Login flow)
+- **org-qc** — Task #2 (Organizations CRUD)
+- **dashboard-qc** — Tasks #4, #5 (Tasks + Dashboard + SLA)
+- **shell-qc** — Tasks #3, #7, #8 (Contacts + Pipeline/Map + Portal Shell)
+
+**Commit:** `b8f3e3d` on `feature/openspec-sprint-1-3`
+**Files changed:** 13
+**Lines changed:** +358 / -71
+
+---
+
+## Design Observations (Not Bugs)
+
+1. **Dual contact data paths** — Org form's inline contacts sub-form stores contacts in `nodeDetails`, while the Contacts tab queries separate contact entities. These are two independent data paths; inline contacts won't appear in the Contacts tab.
+2. **Redundant API call on update** — `updateNode` in MujarradClient does a `getNode` fetch before the PUT, but EntityControlLayer already fetches the node. Results in 3 API calls per update instead of 1. Performance optimization opportunity.
+3. **Graceful null handling** — Some existing orgs have `locations=null`, `type=null`, `status=null` (e.g., "Test Org Safari"). The UI handles these gracefully without crashing.
+4. **React Query retry disabled** — Set `retry: false` globally to prevent error floods. Can re-enable with specific retry logic per query when backend is stable.
 
 ---
 
 ## Next Steps
 
-1. Complete Task #2 (Organizations CRUD) — org-qc agent in progress
-2. Task #6 (Signing flow) — needs dedicated QC
-3. Commit all fixes and push
-4. Test on production deployment
+1. Task #6 (Signing flow) — needs dedicated QC (most complex module)
+2. Test on production deployment (Render)
+3. Address design observations (dual contact path, redundant API calls)
+4. Local data caching strategy (React Query staleTime/gcTime tuning)
