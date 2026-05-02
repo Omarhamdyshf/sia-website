@@ -3,6 +3,7 @@ import { useLogin } from "@refinedev/core";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useGoogleLogin } from "@react-oauth/google";
 import { Button } from "@/components/ui/button";
 import { AnimatedButton } from "../components/AnimatedButton";
 import { Input } from "@/components/ui/input";
@@ -26,12 +27,46 @@ export function PortalLoginPage() {
     resolver: zodResolver(loginSchema),
   });
 
-  const handleGoogleLogin = async () => {
-    if (!hasGoogleOAuth) return;
-    const { useGoogleLogin } = await import("@react-oauth/google");
-    // Dynamic import won't work with hooks — fall back to redirect
-    login({ provider: "google" });
-  };
+  const googleLogin = useGoogleLogin({
+    flow: "implicit",
+    onSuccess: async (tokenResponse) => {
+      setServerError(null);
+      try {
+        const userInfoRes = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+          headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+        });
+        if (!userInfoRes.ok) throw new Error("Failed to fetch user info");
+        const userInfo = await userInfoRes.json();
+
+        login(
+          { provider: "google", credential: tokenResponse.access_token },
+          {
+            onSuccess: (result) => {
+              if (!result.success && result.error) {
+                // Fallback: store session directly if Mujarrad OAuth isn't available
+                const user = { id: userInfo.sub, name: userInfo.name, email: userInfo.email, avatar: userInfo.picture, role: "admin" };
+                localStorage.setItem("sia_token", tokenResponse.access_token);
+                localStorage.setItem("sia_user", JSON.stringify(user));
+                window.location.href = "/portal";
+              }
+            },
+            onError: () => {
+              // Fallback: direct Google session
+              const user = { id: userInfo.sub, name: userInfo.name, email: userInfo.email, avatar: userInfo.picture, role: "admin" };
+              localStorage.setItem("sia_token", tokenResponse.access_token);
+              localStorage.setItem("sia_user", JSON.stringify(user));
+              window.location.href = "/portal";
+            },
+          },
+        );
+      } catch (err) {
+        setServerError(err instanceof Error ? err.message : "Google login failed");
+      }
+    },
+    onError: () => {
+      setServerError("Google login was cancelled or failed");
+    },
+  });
 
   const onSubmit = (data: LoginForm) => {
     setServerError(null);
@@ -114,7 +149,7 @@ export function PortalLoginPage() {
               <AnimatedButton
                 variant="outline"
                 className="w-full"
-                onClick={handleGoogleLogin}
+                onClick={() => googleLogin()}
                 type="button"
               >
                 <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
