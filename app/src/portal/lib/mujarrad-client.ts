@@ -38,10 +38,16 @@ export interface MujarradClientConfig {
     | { type: "jwt"; getToken: () => Promise<string | null> };
 }
 
+// In-flight request dedup + short TTL cache for GET requests
+const CACHE_TTL = 5_000; // 5 seconds
+interface CacheEntry { data: unknown; expiresAt: number }
+
 export class MujarradClient {
   private apiUrl: string;
   private spaceSlug: string;
   private auth: MujarradClientConfig["auth"];
+  private inflight = new Map<string, Promise<unknown>>();
+  private cache = new Map<string, CacheEntry>();
 
   constructor(config: MujarradClientConfig) {
     this.apiUrl = config.apiUrl ?? DEFAULT_API_URL;
@@ -49,7 +55,49 @@ export class MujarradClient {
     this.auth = config.auth;
   }
 
+  /** Invalidate cache entries matching a path prefix */
+  invalidate(pathPrefix?: string) {
+    if (!pathPrefix) { this.cache.clear(); return; }
+    for (const key of this.cache.keys()) {
+      if (key.startsWith(pathPrefix)) this.cache.delete(key);
+    }
+  }
+
   private async request<T>(path: string, options?: RequestInit): Promise<T> {
+    const method = (options?.method ?? "GET").toUpperCase();
+    const isRead = method === "GET";
+
+    // For GET: check cache first, then dedup in-flight requests
+    if (isRead) {
+      const cached = this.cache.get(path);
+      if (cached && cached.expiresAt > Date.now()) return cached.data as T;
+
+      const existing = this.inflight.get(path);
+      if (existing) return existing as Promise<T>;
+    }
+
+    const promise = this._fetch<T>(path, options);
+
+    if (isRead) {
+      this.inflight.set(path, promise);
+      promise.then(
+        (data) => {
+          this.cache.set(path, { data, expiresAt: Date.now() + CACHE_TTL });
+          this.inflight.delete(path);
+        },
+        () => { this.inflight.delete(path); },
+      );
+    } else {
+      // Mutations invalidate relevant cache entries
+      promise.then(() => {
+        this.invalidate(this.spacePath("/nodes"));
+      });
+    }
+
+    return promise;
+  }
+
+  private async _fetch<T>(path: string, options?: RequestInit): Promise<T> {
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
     };
@@ -132,16 +180,18 @@ export class MujarradClient {
       nodeDetails?: T;
       content?: string;
     },
+    /** Pass existing node to skip redundant GET */
+    existing?: MujarradNode<T>,
   ): Promise<MujarradNode<T>> {
-    const existing = await this.getNode<T>(nodeId);
+    const base = existing ?? await this.getNode<T>(nodeId);
     return this.request<MujarradNode<T>>(this.spacePath(`/nodes/${nodeId}`), {
       method: "PUT",
       body: JSON.stringify({
-        title: updates.title ?? existing.title,
-        slug: existing.slug,
-        nodeType: updates.nodeType ?? existing.nodeType,
-        content: updates.content ?? existing.content ?? "",
-        nodeDetails: updates.nodeDetails ?? existing.nodeDetails,
+        title: updates.title ?? base.title,
+        slug: base.slug,
+        nodeType: updates.nodeType ?? base.nodeType,
+        content: updates.content ?? base.content ?? "",
+        nodeDetails: updates.nodeDetails ?? base.nodeDetails,
       }),
     });
   }

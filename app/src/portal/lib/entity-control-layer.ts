@@ -90,7 +90,7 @@ export class EntityControlLayer {
     const node = await this.client.updateNode(id, {
       title,
       nodeDetails: merged,
-    });
+    }, existing);
 
     const record = this.normalize(node);
     this.logActivity("updated", resource, record);

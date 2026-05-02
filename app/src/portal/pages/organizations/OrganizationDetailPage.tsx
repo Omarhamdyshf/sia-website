@@ -220,6 +220,13 @@ export function OrganizationDetailPage() {
         <AnimatedTabContent activeValue={activeTab} value="contacts">
           <Card>
             <CardContent className="pt-6">
+              <div className="flex justify-end mb-4">
+                <Button variant="outline" size="sm" asChild>
+                  <Link to={`/portal/contacts/create?organizationId=${id}&organizationName=${encodeURIComponent(org?.name as string ?? "")}`}>
+                    <Plus className="mr-2 h-4 w-4" /> Add Contact
+                  </Link>
+                </Button>
+              </div>
               {contacts.query.isLoading ? (
                 <TableSkeleton rows={3} columns={4} />
               ) : (contacts.result?.data?.length ?? 0) > 0 ? (

@@ -70,7 +70,12 @@ export function PortalApp() {
         reactQuery: {
           clientConfig: {
             defaultOptions: {
-              queries: { retry: false },
+              queries: {
+                retry: false,
+                staleTime: 15_000,       // 15s default — navigating back won't re-fetch
+                gcTime: 5 * 60_000,      // keep unused data 5 min before GC
+                refetchOnWindowFocus: false,
+              },
               mutations: { retry: false },
             },
           },
