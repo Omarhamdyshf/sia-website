@@ -18,8 +18,8 @@
 |---|-----|--------|-----|
 | C1 | **Tasks have no detail/edit/delete pages** | CRUD, Nav, Relations | Create TaskDetailPage, TaskEditPage. Add delete with confirmation. Add routes + resource paths. |
 | C2 | **Engagements has no sidebar link** | Nav | Add "Engagements" to PortalSidebar navItems |
-| C3 | **No success toasts on any form submission** | Forms, Feedback | Add toast.success() via Refine notification provider after every create/update/delete |
-| C4 | **No error handling on API failures** | States, Forms | Add error boundaries + error toasts on mutation failures. Show error state when useOne/useList fails. |
+| C3 | **~~No success toasts~~** CORRECTED: Refine auto-toasts work. **But signing flows produce toast spam (5-10 toasts)** | Feedback | Suppress intermediate toasts in multi-mutation signing flows |
+| C4 | **No error handling in async signing workflows + no global error boundary** | States, Feedback | Signing create/submit only logs to console. Add user-facing error toasts. Add React ErrorBoundary. |
 | C5 | **ContactFormPage ignores org pre-fill from URL** | Relations | Add useSearchParams to ContactFormPage, read organizationId and pre-fill |
 | C6 | **Org detail contact rows not clickable** | Nav, Relations | Add onClick navigate to /portal/contacts/:id on each contact row |
 | C7 | **Task list org/engagement columns not clickable** | Nav, Relations | Replace plain text with Link components |
